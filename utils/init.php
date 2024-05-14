@@ -37,9 +37,6 @@ $bdd = new PDO("mysql:host=localhost;dbname=projets_combat_mcastellano;charset=U
 // definition des modes de gesion des erreur aec PDO
 $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
-// Activer le mécanisme de session (voir fichier session qui deviendra a terme la classe session)
-session_activation();
-
 /* NOTION "auto chargement des classes" ----------------------------------
 Objectif : charger les classes sans avoir à les inclure une apres l'autre manuellement
 Methode : si une classe PHP rencontre une classenon denfnini il appel une fonction de chargement de la classe
@@ -68,3 +65,9 @@ function autoloadClasses ($class) {
 
 // initialisatiion du chargement automatique de la classe
 spl_autoload_register("autoloadClasses");
+
+// insertion des librairie diverse
+include_once "utils/session.php";
+
+// Activer le mécanisme de session (voir fichier session qui deviendra a terme la classe session)
+session_activation();

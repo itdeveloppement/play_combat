@@ -35,6 +35,29 @@ class _model {
     protected $values = []; // On stockera les valeurs sous la forme [ "nomChamp1" => valeur1, ... ]
     protected $targets = [];    // On stockera pour les liens [ "nomChamp" => objetLié, .. ]
 
+
+    // A INTEGRER AVEC UN APPEL D'OBJET ET NON LA CLASSE STATIC
+    /*
+     // Base de données ouverte
+     protected static $bdd;
+
+     // Ouverture de la base de données
+ 
+ 
+     static function bdd() {
+         // Rôle : retourne l'objet PDO vers la bdd, le créée si nécessaire
+         // Paramètres néant
+         // Retour : l'objet PDO
+ 
+         if (empty(static::$bdd)) {
+             static::$bdd = new PDO("mysql:host=localhost;dbname=cours-dev;charset=UTF8", "cours-dev", "webecom42");
+         }
+         return static::$bdd;
+ 
+ 
+     }
+    */
+     
     // CONSTRUCTEUR
 
     function __construct($id = null) {

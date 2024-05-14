@@ -1,0 +1,5 @@
+<?php
+/**
+ * fragment de page : 
+ */
+?>
