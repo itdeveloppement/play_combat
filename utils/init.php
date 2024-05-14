@@ -68,4 +68,3 @@ function autoloadClasses ($class) {
 
 // initialisatiion du chargement automatique de la classe
 spl_autoload_register("autoloadClasses");
-

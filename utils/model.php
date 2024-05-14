@@ -4,7 +4,6 @@
 Classe _model : classe générique de gestion des objets du modèle de données
 (on a un _ dans le nom pour être sûr de ne pas avoir de table de ce nom)
 
-
 Pour l'utiliser, on a mles méthode
     load(id) : chargement d'un objet depuis la BDD par son id
     is() : indique si l'objet est chargé / existe (true si existe, false sinon)
@@ -19,10 +18,9 @@ Pour l'utiliser, on a mles méthode
 
 */
 
-
 class _model {
 
-    // Attributs :
+    // ATTRIBUTS
     // Description du modèle de l'objet (de la table)
 
     protected $table = "";       // Nom de la table, à valoriser pour les classes réelles;
@@ -32,17 +30,16 @@ class _model {
         //tableau qui pour cahque lien met en index le nom du champ qui est un lien, et en valeur le nom de l'objet
         //  (exemple : [ "fournisseur" => "fournisseur"])
 
-
-    // Stoker unobjet précis
+    // Stoker un objet précis
     protected $id = 0;      // id de l'objet chargé
     protected $values = []; // On stockera les valeurs sous la forme [ "nomChamp1" => valeur1, ... ]
     protected $targets = [];    // On stockera pour les liens [ "nomChamp" => objetLié, .. ]
 
-    // Constructeur
+    // CONSTRUCTEUR
 
     function __construct($id = null) {
-        // Cette fonction se déclenche à chaque fois que l'on instacie un objet (new nomClasse())
-        // Les paramètres du constructeur devront être valorisés dans les parenthèse du new nomClasse() 
+        // Cette fonction se déclenche à chaque fois que l'on instancie un objet (new nomClasse())
+        // Les paramètres du constructeur devront être valorisés dans les parenthèses du new nomClasse() 
         // rôle : charger l'objet correspondant à l'id (si non null)
         // paramètre : l'id de la ligne à chargé
         // retour : constructeur, pas de retour
@@ -52,10 +49,11 @@ class _model {
         if ( ! is_null($id)) {
             $this->load($id);
         }
-
     }
 
-    // méthodes
+    // METHODES
+
+    // **si l'objet est chargé**
 
     function is() {
         // Rôle : dire si l'objet est chargé (si il y a un contact de la BDD dedans)
@@ -64,11 +62,10 @@ class _model {
 
         return ! empty($this->id);      
             // empty recouvre variable non initialisée, variable valant null, et toutes les valeurs apparentées à false (false, 0, "", [])
-
-
     }
 
-    // Getters : récupérer les attributs
+    // **Getters : récupérer les attributs**
+
     // Au lieu de $contact->getEmail(), on va avoir une syntaxe $contact->get("email")
 
     function get($fieldName) {
@@ -90,8 +87,19 @@ class _model {
         } else {
             return "";
         }
-
     }
+
+    /* PRESISION ----------------------------------------------
+    role : recupere un objet associé à un champ, si l'objet est deja chargé il est simplement recupéré ds la mémoire et n'est pas rechargé à chaque appel.
+    L'objet associé au champ peut etre deja chargé pour plusieurs raions : une rquette dans la bdd, un prechargement, le cache
+    La fct getTraget permet :
+    - une encapsulation de la logique de chargement : le stockage des objet chargé est centralisé dans la methode
+    - gestion de la mémoire : en stochkant les objet déja chargé dans un tableau ($target) on evite de charger les objet plusieur fois
+    - abstraction de la structure de donnée : met en evidence les relations complaxes entre diffeentes entités
+    ------------------------------------------------------------
+    */
+
+    // ** recuperer un objet associé**
 
     function getTarget($fieldName) {
         // Rôle : retourner un objet pointé par un champ
@@ -102,26 +110,26 @@ class _model {
         //          si champ inconnu ou pas un lien : retourne un objet _model (vide)
         //          si le champ est un lien, mais vide, ou pas d'bjet en face : le bon objet, mais pas chargé
 
-        // At-on déjà la cible (dans $this->targets)
+        // Verification si l'objet associé au champs est deja chargé dans le tableu $targets (dans $this->targets)
         if (isset($this->targets[$fieldName])) {
             return $this->targets[$fieldName];
         }
 
-        // Est-ce que c'est un lien ?
+        // Si ce n'est pas un lien on instencie un objet qu'on retourne
         if ( ! isset($this->links[$fieldName])) {
             // Ce n'est pas un lien : on retourne un objet de la classe _model
             $this->targets[$fieldName] = new _model();
             return $this->targets[$fieldName];
         }
 
-        // c'est un lien : l'objet pointé est de la classe indéiquée dans $this->links[$fieldName]
+        // c'est un lien : l'objet pointé est de la classe indiquée dans $this->links[$fieldName]
         $nomClasse = $this->links[$fieldName];
         $this->targets[$fieldName] = new $nomClasse($this->get($fieldName));
 
         return $this->targets[$fieldName];
-
     }
 
+    // ** retourner l'id de l'objet **
     function id() {
         // Rôle : récupérer l'id
         // paramètres : néant
@@ -129,10 +137,10 @@ class _model {
 
         //L'id est stocké dans l'atttrbut id
         return $this->id;
-
     }
 
-    // Setters : donne des valeurs aux paramètres
+    // ** Setters : donne des valeurs aux attributs **
+
     // Au lieu de $contact->setNom("Durand), on va avoir une syntaxe $contact->set("nom", "Durand")
     function set($fieldName, $value) {
         // Rôle : changer / initialiser la valeur d'un attribut
@@ -148,9 +156,10 @@ class _model {
         return true;
     }
 
+    // ** defnit toutes les valeurs des objets)**
 
     function loadFromTab($tab) {
-        // Rôle : initialiser l'objet (complètement) à partir d'un tableau de données (simialire à celu réupéré par fetch)
+        // Rôle : initialiser l'objet (complètement) à partir d'un tableau de données (simialire à celui réupéré par fetch)
         // Paramètres : 
         //      $tab : tableau valorisant les champs du MPD
         // Retour : true 
@@ -162,7 +171,7 @@ class _model {
         return true;
     }
 
-    // Méthode de synchronisation avec la BDD
+    // ** recupere un objet de la bdd selon l'id **
 
     function load($id) {
         
@@ -226,9 +235,9 @@ class _model {
         $this->id = $id;
 
         return true;
-
     }
 
+    // ** insere un objet en bdd **
 
     function insert() {
         // Rôle : création du contact courant dans la base de données
@@ -248,14 +257,13 @@ class _model {
             // Erreur sur la requête
             return false;
         }
-
         // ne pas oublier d'enregistrer l'id qui a été généré par la BDD
         // il est donné par la méhode lastInsertId de l'objet $bdd
         $this->id = $bdd->lastInsertId();
-
         return true;
-
     }
+
+    // ** modifie un objet en bdd **
 
     function update() {
         // Rôle : mettre à jour l'objet courant dans la base de données
@@ -278,13 +286,10 @@ class _model {
         // Et pour le tableau : on met l'élément :id (la valeur est dans l'attrribut id)
         //      et tous les champs (un par un "pour chaque" ) : attribut :nomChamp, valeur : elle est dans la tableau values
         //                      on peut aussi récupérer la valeur avec la méthode get(nomChamp)
-
-
         $sql = "UPDATE  `$this->table` SET " . $this->makeRequestSet() . " WHERE `id` = :id ";
         $param = $this->makeRequestParamForSet();
         $param[":id"] = $this->id;
            
-
         // On prépare la requête
         global $bdd;
         $req = $bdd->prepare($sql);
@@ -294,9 +299,7 @@ class _model {
             // Erreur sur la requête
             return false;
         }
-
         return true;
-
     }
 
     function makeRequestSet() {
@@ -319,8 +322,6 @@ class _model {
 
         // Générer le texte final :
         return implode(", ", $tableau);
-
-
     }
 
     function makeTableauSimpleSet() {
@@ -337,8 +338,6 @@ class _model {
             $result[] = "`$nomChamp` = :$nomChamp";
         }
         return $result;
-
-   
     }
 
     function makeRequestParamForSet() {
@@ -346,9 +345,6 @@ class _model {
         // Paramètres : néant
         // Retour : le tableau contenant les valeurs associées aux :nomChamp (pour chaque champ)
         //               [ ":nomChamp1" => valeur1, ":nomChamp2" => valeur2, ... ]
-
-
-
 
         // Je n'ai comme information disponible que :
             // - les attributs de la classe
@@ -374,10 +370,10 @@ class _model {
                 $result[$index] = null;
             }
         }
-
         return $result;
-
     }
+
+    // ** supprime un objet en bdd **
 
     function delete() {
         // Rôle : supprimer l'objet courant dans la base de données
@@ -411,8 +407,9 @@ class _model {
         $this->id = 0;
 
         return true;
-
     }
+
+    // ** donner la liste de tous les objets de cette calsse (depuis la BDD) **
 
     function listAll(...$tris) {
         // Rôle : donner la liste de tous les objets de cette calsse (depuis la BDD)
@@ -481,9 +478,6 @@ class _model {
             // ON ajoute cela dans $result
             $result[$obj->id()] = $obj;
         }
-
         return $result;
-
-
     }
 }

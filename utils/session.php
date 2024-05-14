@@ -27,7 +27,7 @@ function session_activation() {
     if (session_isconnected()) {
         //   - charger l'objet utilisateur connecté 
         global $utilisateurConnecte;
-        $utilisateurConnecte = new profil_utilisateur(session_idconnected());
+        $utilisateurConnecte = new personnage(session_idconnected());
         //   - vérifier qu'il est actif, encore autorisé, etc....
         // ....
     }
@@ -66,7 +66,7 @@ function session_isconnected() {
         global $utilisateurConnecte;
         return $utilisateurConnecte;
     } else {
-        return new profil_utilisateur();
+        return new personnage();
     }
  }
 
