@@ -479,7 +479,6 @@ class _model {
             $tabOrder[] = "`$nomField` $ordre";
         }
         if (!empty($tabOrder))  $sql .= " ORDER BY " . implode(",", $tabOrder);
-        
         // préparer / exécuter
         global $bdd;
         $req = $bdd->prepare($sql);

@@ -60,6 +60,7 @@ function autoloadClasses ($class) {
      } 
      if (class_exists($class)) {
          // code à preciser si necessaire
+         // echo "la classe existe";
      }
 }
 
@@ -68,6 +69,7 @@ spl_autoload_register("autoloadClasses");
 
 // insertion des librairie diverse
 include_once "utils/session.php";
+// Activer le mécanisme de session
+$session = new session();
+$session->activation();
 
-// Activer le mécanisme de session (voir fichier session qui deviendra a terme la classe session)
-session_activation();
