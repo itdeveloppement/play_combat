@@ -13,3 +13,9 @@
     * pseudo
 * password
  */
+
+ // Initialisation
+require_once "utils/init.php";
+
+ // initialisation
+ include "templates/pages/form_connexion_view.php";

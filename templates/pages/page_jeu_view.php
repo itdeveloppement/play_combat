@@ -8,7 +8,8 @@ include "templates/fragments/head_fragment.php";
 
 <body>
     <header>
-
+        <button><a href="deconnexion_controleur.php">Quitter la partie</a></button>
+        <button><a href="afficher_regles_jeu.php">Regles du jeu</a></button>
     </header>
     <main >
         <h1>Le grand combat</h1>
@@ -24,11 +25,12 @@ include "templates/fragments/head_fragment.php";
         <?php include "templates/fragments/liste_personnages_salle_fragment.php"; ?>
 
         <!-- historique des mouvement -->
-        <h2>Historique de mes mouvements</h2>
+        <h2>Historique des mouvements</h2>
         <?php include "templates/fragments/historique_mouvements_personnage_fragment.php"; ?>
-        <!-- les actons possibles-->
-        <h2>Les actions possibles</h2>
 
+        <!-- les actions possibles-->
+        <h2>Les actions possibles</h2>
+        <?php include "templates/fragments/mouvements_possible_personnage_fragment.php"; ?>
     </main>
 </body>
 

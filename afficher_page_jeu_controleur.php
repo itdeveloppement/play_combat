@@ -8,6 +8,8 @@
  * Parm : neant
  */
 
+// Initialisation
+require_once "utils/init.php";
 
  // affiche la page du jeux
 include "templates/pages/page_jeu_view.php";
