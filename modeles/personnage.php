@@ -24,6 +24,8 @@ class personnage extends _model {
  // lien objet
  protected $links = ["evenement" => "evenement"];
 
+
+// --------------------- PASSWORD LOGIN -------------------------------
 /**
  * Rôle : verifie le login et le password de connexion d'un utilisateur
 * @param {string} $log: la valeur de l'identifiant de connexion passé en POST
@@ -44,6 +46,8 @@ public function connexionValide ($log, $password) {
     }
     return false;
     }
+
+// --------------------- LISTE PERSONNAGE DANS UNE SALLLE -------------------------------
 
 /**
  * role : récuperer la liste des personnages present dans la salle
@@ -74,6 +78,7 @@ public function connexionValide ($log, $password) {
     return $listePerso;
 }
 
+// --------------------- HISTORIQUE MVT -------------------------------
 /**
  * role : retourner l'historique des 15 derniers evenement du personnage current
  * @param : neant
@@ -84,23 +89,6 @@ public function histoEvenements(){
     return $historique->histoEvents($this->id());
 }
 
-/*
-public function nomdupersonage($id) {
-    $sql = "SELECT `nom` FROM `$this->table` WHERE `id` = :id ";
-    $param = [ ":id" => $id];
-
-    // Préparer / exécuter
-    global $bdd;
-    $req = $bdd->prepare($sql);
-    if ( ! $req->execute($param)) {
-        return false;
-    }
-
-    $nomPersonnage = $req->fetch(PDO::FETCH_ASSOC);
-    
-    return $nomPersonnage["nom"];
-}
-*/
 }
 
 

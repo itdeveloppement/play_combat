@@ -7,9 +7,9 @@ class evenement extends _model {
  protected $fields = [
     "personnage",
     "adverssaire",
-    "mouvement",
+    "evenement",
     "salle",
-    "action",
+   //  "action",
     "pts_vie",
     "pts_force",
     "pts_agilite",
@@ -21,6 +21,8 @@ class evenement extends _model {
  // lien objet
  protected $links = ["personnage" => "personnage"];
 
+
+ // ------------------------- HISTORIQUE ------------------------------------------
     /**
  * role : recuperer l'historique des 15 derniers evenement du personnage current
  * @param : l'id du personnage
@@ -29,7 +31,7 @@ class evenement extends _model {
  */
 public function histoEvents($id){
     // int bdd
-    $sql = "SELECT `id`, `adverssaire`, `mouvement`, `salle`, `action`, `pts_vie`, `pts_force`, `pts_agilite`, `pts_resistance` FROM `$this->table` WHERE `personnage` = :id ORDER BY `created_date` DESC
+    $sql = "SELECT `id`, `adverssaire`, `evenement`, `salle`, `pts_vie`, `pts_force`, `pts_agilite`, `pts_resistance` FROM `$this->table` WHERE `personnage` = :id ORDER BY `created_date` DESC
     LIMIT 15";
     $param = [ ":id" => $id ];
 
@@ -52,14 +54,42 @@ public function histoEvents($id){
  * @return : le tableau les évenements modifiés
  */
 function modifNomAdverssaireHisto ($tabHisto) {
-// $personnage = new personnage(); 
+  $tabHistoAdverssaire = [];
 foreach($tabHisto as $value){
   // $value["adverssaire"]= $personnage->nomdupersonage($value["adverssaire"]);
   $personnage = new personnage($value["adverssaire"]);
-  $personnage->get("nom");
+  // $personnage->get("nom");
   $value["adverssaire"]= $personnage->get("nom");
-  return $value;
-}
+  $tabHistoAdverssaire[] = $value;
 
 }
+$histoModifier= histoModifAction ($tabHistoAdverssaire);
+
+return $histoModifier;
+}
+
+/**
+ * role : remplace la valeur du champ action par le nom de l'action
+ * @param : tableau de l'historique des evenements du personnage
+ * @return : le tableau les évenements modifiés
+ */
+function histoModifAction ($tabHisto) {
+  $tabAction = [
+    "ATT" => "Attaquer",
+    "DEF" => "Défendre",
+    "RIP" => "Riposter",
+    "ESQ" => "Esquiver",
+    "AVA" => "Avancer",
+    "REC" => "Reculer",
+    "RES" => "Rester",
+    "" => "", // pour les valeur non renseigner en bdd
+  ];
+  $tabHistoModifie = [];
+  foreach($tabHisto as $value){
+    $value["evenement"] = $tabAction [$value["evenement"]];
+    $tabHistoModifie[] = $value;
+  }
+  return $tabHistoModifie;
+  }
+
 

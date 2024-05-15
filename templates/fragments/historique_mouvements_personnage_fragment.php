@@ -9,8 +9,7 @@
 <table>
     <thead>
         <tr>
-            <th>Mouvement</th>
-            <th>Action</th>
+            <th>Evenement</th>
             <th>Salle</th>
             <th>Adverssaire</th>
             <th>Points de vie</th>
@@ -22,8 +21,7 @@
         <tbody>
             <?php foreach ($histoEvents as $Value) {
         echo "<tr>";
-            echo "<td>" . $Value['mouvement'] ."</td>";
-            echo "<td>" . $Value['action'] ."</td>";
+            echo "<td>" . $Value['evenement'] ."</td>";
             echo "<td>" . $Value['salle'] ."</td>";
             echo "<td>" . $Value['adverssaire'] ."</td>";
             echo "<td>" . $Value['pts_vie'] ."</td>";
