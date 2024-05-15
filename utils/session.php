@@ -27,7 +27,8 @@ protected $utilisateurConnecte;
 public function activation () {
     session_start();
     if ($this->isConnected()){
-        $this->utilisateurConnecte = new personnage ($this->getIdConnected());
+        global $utilisateurConnecte;
+        $utilisateurConnecte = new personnage ($this->getIdConnected());
     }
     return $this->isConnected();
 }
@@ -49,7 +50,6 @@ public function isConnected () {
 public function getIdConnected () {
 return $this->isConnected() ? $_SESSION["id"] : 0;
 }
-
 
 /**
  * role : deconnecté la session

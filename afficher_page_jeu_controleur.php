@@ -5,26 +5,35 @@
  * - vérifier les données de connexion
  * - instancier la saison
  * - affiche la page du jeu dans la salle ou se situe la personnage
- * Parm : neant
+ * Parm : POST
+ *  $log : le log de connexion
+ *  $pasword : le password de la connexion
  */
 
 // Initialisation
 require_once "utils/init.php";
 
-// controle et recuperation des données 
-if (((! empty($_POST["log"])) && (! empty($_POST["password"]))) && ((isset($_POST["log"])&&(isset($_POST["password"]))))) {
+// recuperation et controle des données POST
+if (! empty($_POST["log"]) && ! empty($_POST["password"])) {
     $log = $_POST["log"];
     $password = $_POST["password"];
 } else {
     include "templates/pages/form_connexion_view.php";
     exit;
 }
-// validation connexion et rensgnement session id
+// validation de la connexion et rensegnement session id
 $personnage = new personnage();
 if (! $personnage->connexionValide ($log, $password)) {
    include "templates/pages/form_connexion_view.php";
-    exit;
+   exit;
 } 
 
 include "templates/pages/page_jeu_view.php";
+
+// recuperation de la liste des personnes dans une salle
+
+// recuperation de l'histroique du personnage
+
+// recuperation des actions possible
+
 

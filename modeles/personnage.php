@@ -45,3 +45,8 @@ class personnage extends _model {
         return false;
     }
 }
+
+/**
+ * role : récuperer la liste des personnages presnet dans la salle
+ * @param : 
+ */
