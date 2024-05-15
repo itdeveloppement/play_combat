@@ -442,7 +442,7 @@ class _model {
         //     chaque paramètre est le nom du champ précédé de - pour un tri descedant, 
         //              optionnellement de + pour un tri ascendant
         //      $obj->tri("+nom", "+prenom")
-        //  $tris : on donne mles paramètres séparés par une virgle à l'appel, 
+        //  $tris : on donne les paramètres séparés par une virgle à l'appel, 
         //        on récupère un tableau simple dans la fonction
         // retour : liste d'objet de la classe courante, indexées par les id
 

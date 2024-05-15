@@ -28,12 +28,15 @@ if (! $personnage->connexionValide ($log, $password)) {
    exit;
 } 
 
-include "templates/pages/page_jeu_view.php";
-
 // recuperation de la liste des personnes dans une salle
+$personnage->load($session->getIdConnected());
+$listePersonnagesSalle = $personnage->listePersonnagesSalle($personnage->get("salle"));
+// print_r ($listePersonnagesSalle);
 
 // recuperation de l'histroique du personnage
-
+$histoEvents = $personnage->histoEvenements();
+// print_r($histoEvents);
 // recuperation des actions possible
 
+include "templates/pages/page_jeu_view.php";
 

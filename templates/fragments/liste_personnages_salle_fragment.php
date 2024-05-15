@@ -5,14 +5,8 @@
  */
 ?>
 <div class= "flex">
-    <p>Nom</p>
-    <button><a href="js/attaquer_personnage.js">Attaquer</a></button>
- </div>
- <div class= "flex">
-    <p>Nom</p>
-    <button><a href="js/attaquer_personnage.js">Attaquer</a></button>
- </div>
- <div class= "flex">
-    <p>Nom</p>
-    <button><a href="js/attaquer_personnage.js">Attaquer</a></button>
- </div>
+   <?php foreach ($listePersonnagesSalle as $key => $value){
+      echo "<button><a href='js/attaquer_personnage.js'>" . $value . "</a></button>";
+   }
+   ?> 
+</div>

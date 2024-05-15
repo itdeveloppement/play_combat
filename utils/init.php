@@ -1,4 +1,5 @@
 <?php
+
 // NOTION : affichage des erreur  ----------------------------------------
     // parametre l'affichage des erreurs
     // connexion à la base de donnée via PDO

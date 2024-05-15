@@ -22,7 +22,7 @@ include "templates/fragments/head_fragment.php";
                 <li>l'agilité qui est utilisé lors des déplacements et des esquives</li>
                 <li>la résistance qui est utilisé pour ce défendre</li>
             </ul>
-            <p>Tu ne peux pas affecter plus de 10 points à une caracteristique de ton personnage</p>
+            <p>Tu ne peux pas affecter moins de 3 poits ou plus de 10 points à une caracteristique de ton personnage</p>
             <p>100 points de vie sont automatiquement afféctés à ton personnage</p>
         </div>
     </main>

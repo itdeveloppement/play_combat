@@ -7,7 +7,7 @@
  */
  ?>
 
-<p>Nom : </p>
+<p>Nom : <?= $utilisateurConnecte->get("nom") ?></p>
 <div>
     <label for="ptsVie">Points de vie : </label>
     <progress id="ptsVie" value="<?= $utilisateurConnecte->get("pts_vie"); ?>" max="100"></progress>
