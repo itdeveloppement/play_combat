@@ -14,7 +14,7 @@ include "templates/fragments/head_fragment.php";
     <main >
         <h1>Le grand combat</h1>
         <!-- salle -->
-        <p>Numero de la salle : <?= $utilisateurConnecte->get("salle"); ?></p>
+        <p>Salle numéro : <?= $utilisateurConnecte->get("salle"); ?></p>
 
         <!-- caracteristique du personnage -->
         <h2>Carcateristiques du personnage</h2>

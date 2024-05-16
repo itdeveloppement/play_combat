@@ -6,7 +6,7 @@
 ?>
 <div class= "flex">
    <?php foreach ($listePersonnagesSalle as $key => $value){
-      echo "<button><a href='js/attaquer_personnage.js'>" . $value . "</a></button>";
+      echo "<button><a href='js/attaquer_personnage.js'>Attaquer " . $value . "</a></button>";
    }
    ?> 
 </div>

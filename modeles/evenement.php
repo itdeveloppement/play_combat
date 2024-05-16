@@ -43,9 +43,8 @@ public function histoEvents($id){
     }
     // recuperation des données
     $tabHisto = $req->fetchAll(PDO::FETCH_ASSOC);
-    $tabHistoModifier = modifNomAdverssaireHisto ($tabHisto); 
+    $tabHistoModifier = $this->modifNomAdverssaireHisto ($tabHisto); 
     return $tabHistoModifier; 
-    }
 }
 
 /**
@@ -63,8 +62,7 @@ foreach($tabHisto as $value){
   $tabHistoAdverssaire[] = $value;
 
 }
-$histoModifier= histoModifAction ($tabHistoAdverssaire);
-
+$histoModifier = $this->histoModifAction ($tabHistoAdverssaire);
 return $histoModifier;
 }
 
@@ -92,4 +90,43 @@ function histoModifAction ($tabHisto) {
   return $tabHistoModifie;
   }
 
+// --------------- AVANCER ------------------------------
 
+/**
+ * Role inserrer dans la base le mouvement avancer
+ * @param : id du personnage et le numero de la salle atteinte
+ * @return : true si insertion realisé, sinon false
+ */
+public function insertMvtAvancer ($id, $salle) { 
+    $this->set("personnage", $id);
+    $this->set("evenement", "AVA");
+    $this->set("salle", $salle);
+    $this->set("pts_agilite", "-$salle");
+    $this->set("created_date", date('Y-m-d H:i:s'));
+    
+    if ($this->insert()) { 
+      return true;
+    }
+    return false;
+  }
+
+// --------------- RECULER ------------------------------
+/**
+ * Role inserrer dans la base le mouvement avancer
+ * @param : id du personnage et le numero de la salle à atteinte
+ * @return : true si insertion realisé, sinon false
+ */
+public function insertMvtReculer ($id, $salle) { 
+  $this->set("personnage", $id);
+  $this->set("evenement", "REC");
+  $this->set("salle", $salle);
+  $this->set("pts_vie", "$salle");
+  $this->set("created_date", date('Y-m-d H:i:s'));
+  
+  if ($this->insert()) { 
+    return true;
+  }
+  return false;
+}
+
+}

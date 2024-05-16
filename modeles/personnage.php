@@ -89,10 +89,95 @@ public function histoEvenements(){
     return $historique->histoEvents($this->id());
 }
 
+// --------------------- AVANCER ---------------------------------------
+
+/**
+ * Role faire avancer le personnage dans une salle
+ * @param : neant
+ * @return : true si deplacement realisé, sinon false
+ */
+public function avancer(){
+    if ($this->verifMvtAvancer ()) {
+        $this->updateCaracteristiquesPersoAvancer ();
+        // insert mouvement avancer
+        $mvt = new evenement();
+        $mvt->insertMvtAvancer($this->id(),  $this->values["salle"]);
+    return true;
+    }
+    return false;
+}
+
+/**
+ * Role verifier si le deplacement est possible
+ * Condition : avoir au moins autant de points d'agilite que le numero de la salle a atteindre
+ * @param : neant
+ * @return : true si deplacement realisé, sinon false
+ */
+public function verifMvtAvancer(){
+    if ($this->values["pts_agilite"] > $this->values["salle"]) {
+      return true; 
+    }
+    return false;
+}
+
+/**
+ * Role modifir les caracteristique du personnage quand il avance
+ * @param : neant
+ * @return : true si modif realisé, sinon false
+ */
+public function updateCaracteristiquesPersoAvancer(){
+    $ptsAgilite = $this->values["pts_agilite"] - ($this->values["salle"]+1) ;
+    $this->set("salle", ($this->values["salle"]+1));
+    $this->set("pts_agilite",$ptsAgilite);
+    if ($this->update()){
+        return true;
+    }
+    return false;
+}
+
+// --------------------- RECULER ---------------------------------------
+
+/**
+ * Role faire reculer le personnage dans une salle
+ * @param : numero de la piece à attiendre
+ * @return : true si deplacement realisé
+ */
+public function reculer(){
+    $this->updateCaracteristiquesPersoReculer();
+    // insert mouvement avancer
+    $mvt = new evenement();
+    if ($mvt->insertMvtReculer($this->id(), $this->values["salle"])) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Role modifir les caracteristiques du personnage quand il recule
+ * @param : neant
+ * @return : true si modif realisé, sinon false
+ */
+public function updateCaracteristiquesPersoReculer(){
+    $ptVie = ($this->values["salle"]-1) + $this->values["pts_vie"];
+    $this->set("salle", ($this->values["salle"]-1));
+    $this->set("pts_vie",$ptVie);
+    if ($this->update()){
+        return true;
+    }
+    return false;
 }
 
 
-
-
-
+// --------------------- TRANSFORMER POINTS ---------------------------------------
  
+/**
+ * Role transforme un point de force en un point de resistance
+ * consoome trois point d'agilité. Impossible de dépasser 15 points de force
+ * @param : neant
+ * @return : true si modif realisé, sinon false
+ */
+public function transformerForce() {
+
+}
+
+}
