@@ -80,7 +80,7 @@ public function connexionValide ($log, $password) {
 
 // --------------------- HISTORIQUE MVT -------------------------------
 /**
- * role : retourner l'historique des 15 derniers evenement du personnage current
+ * role : retourner l'historique des 15 derniers evenements du personnage current
  * @param : neant
  * @return : le tableau des cararacteristiques des mouvement realisés : 
  */
