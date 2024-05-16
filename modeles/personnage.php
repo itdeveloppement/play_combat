@@ -167,17 +167,90 @@ public function updateCaracteristiquesPersoReculer(){
     return false;
 }
 
-
-// --------------------- TRANSFORMER POINTS ---------------------------------------
+// --------------------- TRANSFORMER POINTS FORCE---------------------------------------
  
 /**
  * Role transforme un point de force en un point de resistance
- * consoome trois point d'agilité. Impossible de dépasser 15 points de force
  * @param : neant
- * @return : true si modif realisé, sinon false
+ * @return : true si les modifications sont realisées, sinon false
  */
 public function transformerForce() {
+    // transforme un point de force en un point de resistance
+   // consomme trois point d'agilité.
+   if ($this->verifTransformerForce()) {
+    $this->set("pts_force", $this->values["pts_force"]-1);
+    $this->set("pts_resistance", $this->values["pts_resistance"]+1);
+    $this->set("pts_agilite", $this->values["pts_agilite"]-3);
+    if ($this->update()) {
+        return true;
+    }
+    return false;
+    }
+}
+/**
+ * Role verifier si la transformation de point de force en points de resistance est possible
+ * @param : neant
+ * @return : true si modifications sont realisées, sinon false
+ */
+public function verifTransformerForce() {
+    /* 
+    possible si :
+        point de force strictement dif de 0
+        point d'agilité egal ou sup à 3
+        point de force strictement inf à 15
+    */
 
+    if ($this->values["pts_force"] == "0") {
+        return false;
+    } else if ($this->values["pts_agilite"] < "3") {
+        return false;
+    } else if ($this->values["pts_force"]>"14") {
+        return false;
+    }
+    return true;
+}
+
+
+// --------------------- TRANSFORMER POINTS RESISTANCE---------------------------------------
+ 
+/**
+ * Role transforme un point de resistance en un point de force
+ * @param : neant
+ * @return : true si les modifications sont realisées, sinon false
+ */
+public function transformerResistance() {
+    // transforme un point de resistance en un point de force
+   // consomme trois point d'agilité.
+   if ($this->verifTransformerResistance()) {
+    $this->set("pts_force", $this->values["pts_force"]+1);
+    $this->set("pts_resistance", $this->values["pts_resistance"]-1);
+    $this->set("pts_agilite", $this->values["pts_agilite"]-3);
+    if ($this->update()) {
+        return true;
+    }
+    return false;
+    }
+}
+/**
+ * Role verifier si la transformation de point de resistance en points de force est possible
+ * @param : neant
+ * @return : true si modifications sont realisées, sinon false
+ */
+public function verifTransformerResistance() {
+    /* 
+    possible si :
+        point de resistance strictement dif de 0
+        point d'agilité egal ou sup à 3
+        point de resistance strictement inf à 15
+    */
+    if ($this->values["pts_resistance"] == "0") {
+        return false;
+    } else if ($this->values["pts_agilite"] < "3") {
+        return false;
+    } else if ($this->values["pts_resistance"]>"14") {
+        return false;
+    }
+    return true;
 }
 
 }

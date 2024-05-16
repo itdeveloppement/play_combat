@@ -15,4 +15,6 @@ $id=1;
 // print_r($histoEvent->histoEvents($id));
 
 
-$personnage->reculer () ;
+// $personnage->reculer () ;
+
+print_r($personnage->transformerResistance());
