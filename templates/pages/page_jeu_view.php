@@ -11,10 +11,10 @@ include "templates/fragments/head_fragment.php";
         <button><a href="deconnexion_controleur.php">Quitter la partie</a></button>
         <button><a href="afficher_regles_jeu.php">Regles du jeu</a></button>
     </header>
-    <main >
-        <h1>Le grand combat</h1>
+    <main>
+        <h1 >Le grand combat</h1>
         <!-- salle -->
-        <p>Salle numéro : <?= $utilisateurConnecte->get("salle"); ?></p>
+        <p>Salle numéro : <span id="salle"><?= $personnage->get("salle"); ?></span></p>
 
         <!-- caracteristique du personnage -->
         <h2>Carcateristiques du personnage</h2>

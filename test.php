@@ -17,4 +17,4 @@ $id=1;
 
 // $personnage->reculer () ;
 
-print_r($personnage->transformerResistance());
+print_r($personnage->transformerForce());

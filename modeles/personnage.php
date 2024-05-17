@@ -85,7 +85,8 @@ public function connexionValide ($log, $password) {
  * @return : le tableau des cararacteristiques des mouvement realisés : 
  */
 public function histoEvenements(){
-    $historique = new evenement();
+    // $historique = new evenement();
+    $historique = $this->getTarget('evenement');
     return $historique->histoEvents($this->id());
 }
 
@@ -145,7 +146,8 @@ public function updateCaracteristiquesPersoAvancer(){
 public function reculer(){
     $this->updateCaracteristiquesPersoReculer();
     // insert mouvement avancer
-    $mvt = new evenement();
+   // $mvt = new evenement();
+    $mvt=$this->getTarget('evenement');
     if ($mvt->insertMvtReculer($this->id(), $this->values["salle"])) {
         return true;
     }
@@ -197,14 +199,14 @@ public function verifTransformerForce() {
     possible si :
         point de force strictement dif de 0
         point d'agilité egal ou sup à 3
-        point de force strictement inf à 15
+        point de resistance strictement inf à 15
     */
 
     if ($this->values["pts_force"] == "0") {
         return false;
     } else if ($this->values["pts_agilite"] < "3") {
         return false;
-    } else if ($this->values["pts_force"]>"14") {
+    } else if ($this->values["pts_resistance"]>"14") {
         return false;
     }
     return true;
@@ -247,7 +249,7 @@ public function verifTransformerResistance() {
         return false;
     } else if ($this->values["pts_agilite"] < "3") {
         return false;
-    } else if ($this->values["pts_resistance"]>"14") {
+    } else if ($this->values["pts_force"]>"14") {
         return false;
     }
     return true;

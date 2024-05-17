@@ -2,7 +2,7 @@
 
 /**
  * Role : 
- *  modifier les points d'agilité dans la base quand le personnage recule
+ *  modifier les points de forceen resistance
  *  inserer l'historique de l'évenement
  * Parm : neant
  */
@@ -19,22 +19,13 @@ if ( ! $session->isConnected()) {
 
 // modification des caracteristiques du personnage et insertion histo evenement
 $personnage = new personnage($session->getIdConnected());  
-$personnage->reculer();
-
+$personnage->transformerForce();
 // preparer le retour des données a afficher
-$historique = $personnage->histoEvenements();
-
-// preparer et encoder en json le retour des données a afficher
-$personnage = [
-    "salle" => $personnage->get("salle"),
-    "pts_vie" => $personnage->get("pts_vie"),
-];
-
 $data = [
-    "personnage" => $personnage,
-    "historique" => $historique
+    "pts_force" => $personnage->get("pts_force"),
+    "pts_agilite" => $personnage->get("pts_agilite"),
+    "pts_resistance" => $personnage->get("pts_resistance"),
 ];
-
 header('Content-Type: application/json; charset=utf-8');
 $json = json_encode($data);
 echo $json;

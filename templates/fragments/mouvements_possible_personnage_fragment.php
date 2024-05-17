@@ -7,5 +7,5 @@
 
 <button id="btnAvancer">Avancer</button>
 <button id="btnReculer">Retour</button>
-<button id="transForce">Transformer un point de force en point de resistance</button>
-<button id="transResistance"></a>Transformer un point de resistance en point de force</button>
+<button id="btnForce">Transformer force en resistance</button>
+<button id="btnResistance"></a>Transformer resistance en force</button>

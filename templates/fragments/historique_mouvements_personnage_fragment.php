@@ -10,7 +10,7 @@
     <thead>
         <tr>
             <th>Evenement</th>
-            <th>Salle</th>
+            <th>Salle atteinte</th>
             <th>Adverssaire</th>
             <th>Points de vie</th>
             <th>Points de force</th>
@@ -18,7 +18,7 @@
             <th>Points de résistance</th>
         </tr>
     </thead>
-        <tbody>
+        <tbody id="zone">
             <?php foreach ($histoEvents as $Value) {
         echo "<tr>";
             echo "<td>" . $Value['evenement'] ."</td>";

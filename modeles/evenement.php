@@ -9,7 +9,6 @@ class evenement extends _model {
     "adverssaire",
     "evenement",
     "salle",
-   //  "action",
     "pts_vie",
     "pts_force",
     "pts_agilite",
@@ -129,6 +128,20 @@ public function insertMvtReculer ($id, $salle) {
   return false;
 }
 
+// --------------- MOURRIR------------------------------
+
+/**
+ * Role detecte si un personnage est mort
+ * @param : id du personnage
+ * @return : true si mort, sinon false
+ */
+function dead ($id) {
+
+  if ($this->get("pts_vie" == 0)) {
+    return true;
+  } return false;
+
+}
 
 
 }
