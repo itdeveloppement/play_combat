@@ -25,15 +25,20 @@ Paramètres : neant
     
     <div>
         <label for="log">Créer un identifiant :</label>
-        <input type="text" name="log">
+        <input type="text" name="log" placeholder="Identifiant" required>
     </div>
-    <div>
+    <div classe="flex">
         <label for="password">Créer un mot de passe :</label>
-        <input type="text" name="password">
+        <input id="createPasswordInput" type="password" name="password" placeholder="Mot de passe"required>
+        <div>
+            <img id="createPassword" src="images/icons/oeil_ouvert.png" alt="Oeil pour faire apparaitre le mot de passe">
+        </div>
     </div>
     <div>
         <label for="passwordConf">Confirmer votre mot de passe :</label>
-        <input type="text" name="passwordConf">
+        <div>
+            <input id="confPasswordInput" type="password" name="passwordConf" placeholder="Confirmer mot de passe" required>
+        </div>
     </div>
     <input type="submit" value="Créer votre personnage">
 </form>

@@ -3,7 +3,7 @@
  * Parm : neant
  */
 
-// ------------------ECOUTEUR ---------------------------------
+// ------------------ECOUTEUR MOUVEMENT PERSONNAGE ---------------------------------
 document.getElementById("btnAvancer").addEventListener("click", ()=> {
     avancer();
 });
@@ -16,6 +16,8 @@ document.getElementById("btnForce").addEventListener("click", ()=> {
 document.getElementById("btnResistance").addEventListener("click", ()=> { 
     resistance();
 });
+
+
 
 //------------------------ MOUVEMENT ---------------------------------
 /**
