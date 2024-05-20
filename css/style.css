@@ -9,6 +9,17 @@ body {
 
 /* icon oeil mot de passe */
 
+.chpObligatoire {
+    color: rgb(255, 60, 0);
+}
+.messageErrorIdentifiant {
+    color: red;
+    display: none;
+}
+.messageErrorPassword {
+    color: red;
+    display: none;
+}
 #createPassword {
     width: 20px;
     height: auto;

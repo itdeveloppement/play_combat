@@ -17,5 +17,6 @@
  // Initialisation
 require_once "utils/init.php";
 
+print_r($_POST);
  // initialisation
  include "templates/pages/form_connexion_view.php";

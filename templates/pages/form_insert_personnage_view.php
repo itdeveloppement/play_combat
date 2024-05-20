@@ -28,7 +28,7 @@ include "templates/fragments/head_fragment.php";
     </main>
 </body>
 
-<script src="js/form_insert_personnage.js" defer></script>
+<script src="js/form_insert_personnage_controleur.js" defer></script>
 <?php
 // Fragment de page : footer
 include "templates/fragments/footer_fragment.php";

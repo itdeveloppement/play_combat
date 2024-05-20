@@ -47,6 +47,23 @@ public function connexionValide ($log, $password) {
     return false;
     }
 
+// ---------------------- IDENTIFIANT ------------------------------------
+/**
+ * Role : compare l'identifiant en creation aux identifiants de ala base
+ * @param : l'identifiant en création
+ * @return : true si different, false sinon
+ */
+public function identifiantValide ($identifiant) {
+    $listAllPersonnage = $this->listAll();
+    foreach ($listAllPersonnage as $values) {
+        $valuePersonnage = $values->values;
+        if ($valuePersonnage["pseudo"] == $identifiant) {
+            return false;
+        }
+    }
+    return true;
+}
+
 // --------------------- LISTE PERSONNAGE DANS UNE SALLLE -------------------------------
 
 /**
