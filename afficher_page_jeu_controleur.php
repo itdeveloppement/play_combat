@@ -34,7 +34,6 @@ $listePersonnagesSalle = $personnage->listePersonnagesSalle($personnage->get("sa
 
 // histroique du personnage
 $histoEvents = $personnage->histoEvenements();
-// print_r($histoEvents);
 
 //actions possible
 

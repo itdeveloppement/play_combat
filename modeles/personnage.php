@@ -38,7 +38,7 @@ public function connexionValide ($log, $password) {
         $logPersonnage = $values->get("pseudo");
         $passwordPersonnage = $values->get("password");
         // vrification concordance
-        if (($logPersonnage===$log) && ( $passwordPersonnage ===$password)) {
+        if (($logPersonnage==$log) && (password_verify($password, $passwordPersonnage))) {
             $session = new session();
             $session->connect($personnage);
             return true;

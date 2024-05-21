@@ -12,21 +12,21 @@ Paramètres : neant
         <span class="chpObligatoire">*</span>
     </div>
     <div>
-        <label for="force">Points de force :</label>
-        <input type="range" id="force" name="force" min="0" max="15" value="0" required>
+        <label for="pts_force">Points de force :</label>
+        <input type="range" id="force" name="pts_force" min="0" max="15" value="0" required>
     </div>
     <div>
-        <label for="agilite">Points d'agilite :</label>
-        <input type="range" id="agilite" name="agilite" min="0" max="15" value="0" required>
+        <label for="pts_agilite">Points d'agilite :</label>
+        <input type="range" id="agilite" name="pts_agilite" min="0" max="15" value="0" required>
     </div>
     <div>
-        <label for="resistance">Points de resistance :</label>
-        <input type="range" id="resistance" name="resistance" min="0" max="15" value="0" required>
+        <label for="pts_resistance">Points de resistance :</label>
+        <input type="range" id="resistance" name="pts_resistance" min="0" max="15" value="0" required>
     </div>
     
     <div>
         <label for="log">Créer un identifiant :</label>
-        <input id="identifiant" type="text" name="log" placeholder="Identifiant" required>
+        <input id="identifiant" type="text" name="pseudo" placeholder="Identifiant" required>
         <span class="chpObligatoire">*</span>
         <div class="messageErrorIdentifiant" id="errorIdentifiant">L'identifiant existe deja</div>
     </div>

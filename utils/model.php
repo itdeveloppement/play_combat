@@ -271,7 +271,6 @@ class _model {
         // En paralèle, faire un tableau de valorisation des :nomChampX : [ ":nomChamp1" => valeurChamp1, ":nomChamp1" => valeurChamp2, ...]
         $sql = "INSERT INTO `$this->table`SET " . $this->makeRequestSet();
         $param  = $this->makeRequestParamForSet();
-
         // On prépare la requête
         global $bdd;
         $req = $bdd->prepare($sql);
