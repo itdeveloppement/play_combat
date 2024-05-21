@@ -99,11 +99,63 @@ public function identifiantValide ($identifiant) {
 // --------------------- SUBIR UNE ATTAQUE -------------------------------
 
 /**
- * role : 
+ * role : determine si le personnage attaqué esquive, riposte, ou se defend
+ * @param : id de du personnage attaqué
+ * @return : true si le personnage attaqué gagne le combat, "esquive" si personne gagne le comat et false si il perd le combat
  */
 function subirAttaque($idSubirAttaque) {
+   
+if ($this->esquiver ($idSubirAttaque)) {
+    echo "esquive";
+    return "esquive";
+} /*else if ($this->riposte($idSubirAttaque) ) {
 
 }
+*/
+echo "esquive ratée";
+}
+
+// --------------------- ESQUIVER -------------------------------
+/**
+ * role : determine si le personnage à esquiver
+ * calcul et insert les points d'agilité en bdd
+ * @param : id de du personnage attaqué
+ * @return : true si l'esquive à reussi , sinon false
+ * obs : esquive reussi si pts agilité personnage attaqué au moins sup à pts force attaquant20
+ */
+function esquiver ($idSubirAttaque) {
+    $forceAttaquant = $this->values["pts_force"];
+    $personnageSubirAttaque = new personnage($idSubirAttaque);
+    $agiliteSubirAttaque =  $personnageSubirAttaque->get("pts_agilite");
+    $result = intval($agiliteSubirAttaque) - intval($forceAttaquant);
+   
+    if ($result>=3) {
+        echo "test";
+        $personnageSubirAttaque->set("pts_agilite", (intval($agiliteSubirAttaque)+1));
+        $personnageSubirAttaque->update();
+        return true;
+    } else {
+        return false;
+    }
+    
+}
+
+// --------------------- RIPOSTE -------------------------------
+/**
+ * role : determine si le personnage à esquiver
+ * calcul et insert les points d'agilité en bdd
+ * @param : id de du personnage attaqué
+ * @return : true si l'esquive à reussi , sinon false
+ */
+function riposte ($idSubirAttaque) {
+    $forceAttaquant = $this->get("pts_force");
+    $personnage = new personnage($idSubirAttaque);
+    $forceSubirAttaque = $personnage->get("force");
+    if($forceSubirAttaque > $forceAttaquant) {
+        echo "riposte a faire";
+    };
+}
+
 
 // --------------------- HISTORIQUE MVT -------------------------------
 /**
