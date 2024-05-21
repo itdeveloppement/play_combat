@@ -108,20 +108,21 @@ function subirAttaque($idSubirAttaque) {
 if ($this->esquiver ($idSubirAttaque)) {
     echo "esquive";
     return "esquive";
-} /*else if ($this->riposte($idSubirAttaque) ) {
+} else if ($this->riposte($idSubirAttaque) ) {
+    return true;
 
 }
-*/
+
 echo "esquive ratée";
 }
 
 // --------------------- ESQUIVER -------------------------------
 /**
- * role : determine si le personnage à esquiver
- * calcul et insert les points d'agilité en bdd
+ * role : determine si le personnage attaqué à esquiver
+ * calcul et insert les points d'agilité en bdd si esquive reussit
  * @param : id de du personnage attaqué
  * @return : true si l'esquive à reussi , sinon false
- * obs : esquive reussi si pts agilité personnage attaqué au moins sup à pts force attaquant20
+ * obs : esquive reussi si pts agilité personnage attaqué au moins sup à pts force attaquant
  */
 function esquiver ($idSubirAttaque) {
     $forceAttaquant = $this->values["pts_force"];
@@ -130,7 +131,6 @@ function esquiver ($idSubirAttaque) {
     $result = intval($agiliteSubirAttaque) - intval($forceAttaquant);
    
     if ($result>=3) {
-        echo "test";
         $personnageSubirAttaque->set("pts_agilite", (intval($agiliteSubirAttaque)+1));
         $personnageSubirAttaque->update();
         return true;
@@ -142,20 +142,25 @@ function esquiver ($idSubirAttaque) {
 
 // --------------------- RIPOSTE -------------------------------
 /**
- * role : determine si le personnage à esquiver
+ * role : determine si le personnage attaqué riposte
  * calcul et insert les points d'agilité en bdd
  * @param : id de du personnage attaqué
- * @return : true si l'esquive à reussi , sinon false
+ * @return : true si la riposte à reussi , sinon false
+ * obs : si la force de l'attaqué est strictement sup à la force de l'attaquant, riposte reussit
  */
 function riposte ($idSubirAttaque) {
     $forceAttaquant = $this->get("pts_force");
-    $personnage = new personnage($idSubirAttaque);
-    $forceSubirAttaque = $personnage->get("force");
-    if($forceSubirAttaque > $forceAttaquant) {
-        echo "riposte a faire";
-    };
+    $personnageSubirAttaque = new personnage($idSubirAttaque);
+    $forceSubirAttaque = $personnageSubirAttaque->get("pts_force");
+    if(intval($forceSubirAttaque) > intval($forceAttaquant)) {
+        $personnageSubirAttaque->set("pts_vie", ($personnageSubirAttaque->get("pts_vie")+1));
+        $personnageSubirAttaque->update();
+        return true;
+    } else { 
+        $personnageSubirAttaque->set("pts_vie", ($personnageSubirAttaque->get("pts_vie")-2));
+        $personnageSubirAttaque->update();
+        return false; };
 }
-
 
 // --------------------- HISTORIQUE MVT -------------------------------
 /**
