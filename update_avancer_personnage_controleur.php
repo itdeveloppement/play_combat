@@ -21,9 +21,10 @@ if ( ! $session->isConnected()) {
 $personnage = new personnage($session->getIdConnected());  
 $personnage->avancer();
 $historique = $personnage->histoEvenements();
-// print_R($histo);
-
+$numSalle = $personnage->get("salle");
 // preparer et encoder en json le retour des données a afficher
+$listePersonnageSalle = $personnage->listePersonnagesSalle($numSalle);
+
 $personnage = [
     "salle" => $personnage->get("salle"),
     "pts_vie" => $personnage->get("pts_vie"),
@@ -32,7 +33,8 @@ $personnage = [
 
 $data = [
     "personnage" => $personnage,
-    "historique" => $historique
+    "historique" => $historique,
+    "listePersonnageSalle" => $listePersonnageSalle
 ];
 
 header('Content-Type: application/json; charset=utf-8');

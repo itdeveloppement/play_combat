@@ -43,6 +43,7 @@ $_POST["created_date"] =  date("Y-m-d H:i:s");
 unset($_POST["passwordConf"]);
 $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
 $_POST["pts_vie"] = 100;
+$_POST["salle"] = 0;
 
 // insertion des données
 $personnage = new personnage();

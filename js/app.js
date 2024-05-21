@@ -17,6 +17,30 @@ document.getElementById("btnResistance").addEventListener("click", ()=> {
     resistance();
 });
 
+// ------------------------ ATTAQUER ---------------------------------
+
+/**
+ * role : gerer l'attaque d'un personnage sur un autre
+ * @param : l'id de la personne attaquée
+ */
+function attaquer(idSubirAttaque) {
+    console.log (idSubirAttaque);
+    fetch(`update_attaque_controleur.php?id=${idSubirAttaque}`)
+        .then(response=>{
+            return response.json();
+        })  .then (response=>{
+           
+            console.log(response);
+        })
+        // recuperation des erreurs
+        .catch(erreur=>{
+            console.log(erreur);
+        });
+
+    
+}
+
+
 
 
 //------------------------ MOUVEMENT ---------------------------------
@@ -36,8 +60,9 @@ function avancer() {
             document.getElementById('ptsVie').textContent = response.personnage.pts_vie;
             document.getElementById('ptsAgilite').value = response.personnage.pts_agilite;
             document.getElementById('ptsAgilite2').textContent = response.personnage.pts_agilite;
-
+            // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
+            affichageListePerssonagesSalle(response.listePersonnageSalle)
         })
         // recuperation des erreurs
         .catch(erreur=>{
@@ -51,17 +76,17 @@ function avancer() {
  * @return : 
  */
 function reculer() {
-    
     fetch("update_reculer_personnage_controleur.php")
         .then(response=>{
-            
             return response.json();
-          
         })  .then (response=>{
             // affichage des modifciation
             document.getElementById('salle').textContent = response.personnage.salle;
             document.getElementById('ptsVie').textContent = response.personnage.pts_vie;
+            // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
+            affichageListePerssonagesSalle(response.listePersonnageSalle)
+            
         })
         // recuperation des erreurs
         .catch(erreur=>{
@@ -80,7 +105,7 @@ function force() {
         .then(response=>{
             return response.json();
         })  .then (response=>{
-            console.log(response);
+            
             // affichageModif(response);
             document.getElementById('ptsForce').value = response.pts_force;
             document.getElementById('ptsForce2').textContent = response.pts_force;
@@ -105,8 +130,7 @@ function resistance() {
         .then(response=>{
             return response.json();
         })  .then (response=>{
-            // console.log(response);
-            // affichageModif(response);
+            
             document.getElementById('ptsForce').value = response.pts_force;
             document.getElementById('ptsForce2').textContent = response.pts_force;
             document.getElementById('ptsResistance').value = response.pts_resistance;
@@ -120,14 +144,15 @@ function resistance() {
         });
 };
 
-/** OBSOLETTE
+// ------ FCTS AFFICHAGE HISTO ET LISTE PERSONNAGE SALLE ----------------            
+/** 
  * Role : affiche la mise à jour de l'historique
- * @param {Objet} l'iobjet contenant les données de l'historique
+ * @param {Objet} l'objet contenant les données de l'historique
  * @return
  */
 function affichageHistorique(historiques){
     // mise à jour numero de salle
-    zone = document.getElementById("zone");
+    let zoneHistorique = document.getElementById("zoneHistorique");
     let template = '';
     historiques.forEach (function (historique) {
         template +=
@@ -142,9 +167,64 @@ function affichageHistorique(historiques){
                 <td> ${historique.pts_resistance !== null ? historique.pts_resistance : ''} </td>
             </tr>
         `;
-    zone.innerHTML = template;
+        zoneHistorique.innerHTML = template;
 });
 }
+
+/** 
+ * Role : affiche la mise à jour de la liste des personnages dans une salle
+ * @param {Objet} l'objet contenant les données de la liste des personnages
+ * @return
+ */
+function affichageListePerssonagesSalle(listePersonnagesSalle){ 
+    let zoneListePersonnage = document.getElementById("zoneListePersonnage");
+
+    if (Object.values(listePersonnagesSalle).length > 0) {
+        // Récupérer les clés
+        let keys = Object.keys(listePersonnagesSalle);
+
+        let template = '';
+
+        Object.values(listePersonnagesSalle).forEach (function (personnage, index) {
+            template +=
+           `
+            <button class="btn_attaquer" data-id="${keys[index]}">Attaquer ${personnage !== null ? personnage : ''}</button>
+            `;
+        });
+
+        // Insérer le HTML dans le DOM
+        zoneListePersonnage.innerHTML = template;
+
+        // Ajouter les écouteurs d'événements après l'insertion et raffraichir affichage liste personnages ds la salle
+        let buttons = document.querySelectorAll('.btn_attaquer');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                let idSubirAttaque = button.getAttribute('data-id');
+                attaquer(idSubirAttaque);
+            });
+        });
+    } else {
+        template = '';
+        zoneListePersonnage.innerHTML = template;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ------------------ MODIFICATION AFFICHAGE ----------------------
 /** OBSOLETTE

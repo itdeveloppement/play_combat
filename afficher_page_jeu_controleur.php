@@ -21,6 +21,7 @@ if (! empty($_POST["log"]) && ! empty($_POST["password"])) {
     include "templates/pages/form_connexion_view.php";
     exit;
 }
+
 // validation de la connexion et rensegnement session id
 $personnage = new personnage();
 if (! $personnage->connexionValide ($log, $password)) {

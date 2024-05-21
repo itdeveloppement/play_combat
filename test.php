@@ -18,3 +18,6 @@ $id=1;
 // $personnage->reculer () ;
 
 print_r($personnage->identifiantValide("x"));
+
+$idSallle = 1;
+print_r ($personnage->listePersonnagesSalle ($idSallle)); 

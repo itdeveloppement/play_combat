@@ -18,7 +18,7 @@
             <th>Points de résistance</th>
         </tr>
     </thead>
-        <tbody id="zone">
+        <tbody id="zoneHistorique">
             <?php foreach ($histoEvents as $Value) {
         echo "<tr>";
             echo "<td>" . $Value['evenement'] ."</td>";

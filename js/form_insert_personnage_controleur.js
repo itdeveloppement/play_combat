@@ -97,10 +97,6 @@ monform.addEventListener("submit",(event)=>{
     event.preventDefault();
     let test1 = comparePassword ();
     let test2 = affichageMessageErreurIdentifiant();
-   
-    console.log("non soumission");
-    console.log(test1);
-    console.log(test2);
     if(test1===true && 
         test2 === true
          ){

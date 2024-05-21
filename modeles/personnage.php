@@ -69,7 +69,7 @@ public function identifiantValide ($identifiant) {
 /**
  * role : récuperer la liste des personnages present dans la salle
  * @param : le numero de la salle
- * @return : le tableau des nom des personnage indexé par l'id du personnage
+ * @return : le tableau des noms des personnages indexé par l'id du personnage
  */
  public function listePersonnagesSalle ($idSallle) {
     // interogation bdd
@@ -92,7 +92,17 @@ public function identifiantValide ($identifiant) {
         $listePerso [$value["id"]] = $value["nom"];
         }
     }
+    
     return $listePerso;
+}
+
+// --------------------- SUBIR UNE ATTAQUE -------------------------------
+
+/**
+ * role : 
+ */
+function subirAttaque($idSubirAttaque) {
+
 }
 
 // --------------------- HISTORIQUE MVT -------------------------------
