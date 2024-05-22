@@ -24,7 +24,7 @@ document.getElementById("btnResistance").addEventListener("click", ()=> {
  * @param : l'id de la personne attaquée
  */
 function attaquer(idSubirAttaque) {
-    console.log (idSubirAttaque);
+    // console.log (idSubirAttaque);
     fetch(`update_attaque_controleur.php?id=${idSubirAttaque}`)
         .then(response=>{
             return response.json();

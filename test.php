@@ -4,29 +4,16 @@
  include "utils/init.php";
 
  $session = new session ();
- $session->connect(17);
+ $session->connect(15);
 
- // print_r($_SESSION);
- // instance
- $personnage = new personnage(17);
- // $mvt = new evenement();
+ $personnage = new personnage(15);
  
-// recuperation liste des personnage dans une salle
-//$personnage->listePersonnagesSalle();
 
-// historique des mouvement d'un d'un personnage
-// $id=1;
-// print_r($histoEvent->histoEvents($id));
+$idAdversaire=17;
 
-
-// $personnage->reculer () ;
-
-// print_r($personnage->identifiantValide("x"));
-
-//$idSallle = 1;
-//print_r ($personnage->listePersonnagesSalle ($idSallle)); 
-
-$idSubirAttaque=15;
-// $personnage->subirAttaque($idSubirAttaque);
-
-$personnage->defendreRiposte ($idSubirAttaque);
+// $personnage->defendreRiposte ($idSubirAttaque);
+// $personnage->esquiver ($idAdversaire);
+// $personnage->defendre ($idAdversaire);
+// $personnage->defendreRiposte ($idAdversaire);
+// $personnage->esquiverRiposte ($idAdversaire);
+$personnage->riposte ($idAdversaire);
