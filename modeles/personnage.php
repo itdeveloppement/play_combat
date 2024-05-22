@@ -106,17 +106,33 @@ public function identifiantValide ($identifiant) {
 function subirAttaque($idSubirAttaque) {
    
 if ($this->esquiver ($idSubirAttaque)) {
-    echo "esquive";
-    return "esquive";
-} else if ($this->riposte($idSubirAttaque) ) {
-    return true;
+    exit;
+    
+}else if ($this->riposte($idSubirAttaque) ) {
+    $perso = new personnage($idSubirAttaque);
+    $perso->subirAttaqueRiposte($this->id());
+    exit;
+
+} else if ($this->defendre($idSubirAttaque)) {
+    exit;
+}
+}
+
+
+function subirAttaqueRiposte ($idSubirAttaque) {
+    if ($this->esquiverRiposte ($idSubirAttaque)) {
+        exit;
+    } else if ($this->defendreRiposte($idSubirAttaque)) {
+        // calcul des points
+        exit;
+    } else {
+        // calcul des points
+        exit;
+    }
 
 }
 
-echo "esquive ratée";
-}
-
-// --------------------- ESQUIVER -------------------------------
+// --------------------- ESQUIVER ------------------------------- OK
 /**
  * role : determine si le personnage attaqué à esquiver
  * calcul et insert les points d'agilité en bdd si esquive reussit
@@ -127,20 +143,121 @@ echo "esquive ratée";
 function esquiver ($idSubirAttaque) {
     $forceAttaquant = $this->values["pts_force"];
     $personnageSubirAttaque = new personnage($idSubirAttaque);
+    $personnagePtsVie =  $personnageSubirAttaque->get("pts_vie");
     $agiliteSubirAttaque =  $personnageSubirAttaque->get("pts_agilite");
     $result = intval($agiliteSubirAttaque) - intval($forceAttaquant);
-   
     if ($result>=3) {
-        $personnageSubirAttaque->set("pts_agilite", (intval($agiliteSubirAttaque)+1));
+        echo "esquive arret combat = egalité";
+        // calcul des points
+
+        // l'adversaire perd 1 point de vie
+        $personnageSubirAttaque->set("pts_vie", (intval($personnagePtsVie)-1));
         $personnageSubirAttaque->update();
+
+        // l'attaquant transforme un point de force en un point de resistance si 10pt de forces ou plus,
+        if ($this->get("pts_force")>=10) {
+            $this->set("pts_force", $this->values["pts_force"]-1);
+            $this->set("pts_resistance", $this->values["pts_resistance"]+1);
+        }
+        $this->update();
         return true;
+        exit;
     } else {
+        echo "esquive combat continue";
         return false;
     }
-    
 }
 
-// --------------------- RIPOSTE -------------------------------
+// --------------------- DEFENDRE ------------------------------- OK
+/**
+ * role : determine si le personnage attaqué se defend
+ * calcul et insert les points de vie en bdd
+ * @param : id de du personnage attaqué
+ * @return : true si la defence à reussi , sinon false
+ * obs : se defend si les pts de resistance du personnage attaqué sont sup ou egal aux pts de force du personnage attaquant
+ */
+function defendre ($idSubirAttaque) {
+    $forceAttaquant = $this->get("pts_force");
+    $personnageSubirAttaque = new personnage($idSubirAttaque);
+    $resistanceSubirAttaque = $personnageSubirAttaque->get("pts_resistance");
+    $ptsVieSubirAttaque = $personnageSubirAttaque->get("pts_vie");
+    if(intval( $resistanceSubirAttaque) >= intval($forceAttaquant)) {
+        // points gagné par l'adversaire : neant
+
+        // points perdu par l'attaquant : 1 point de vie.
+        $this->set("pts_vie", ($this->get("pts_vie") - 1));
+        $this->update();
+       
+        echo "defendre combat gagné par l'attaqué ";
+        return true ;
+        exit;
+    } else {
+        echo "defence combat gagné par l'attaquant ";
+        // combat gagné par l'attaquant 
+
+        // points de vie perdu par l'attaqué : en points de vie la différence entre notre résistance et la force de l'attaque.
+        $result = intval($forceAttaquant) - intval($resistanceSubirAttaque);
+        $personnageSubirAttaque->set("pts_vie", ($personnageSubirAttaque->get("pts_vie")-$result));
+        $personnageSubirAttaque->update();
+
+        // points gagné par l'attaquant : ajout un point d'agilite ou un point de vie si deja 15 pt d'agilite
+        if ($this->get("pts_agilite") > 15) {
+            $this->set("pts_vie", ($this->get("pts_vie")+1));
+        } else {
+            $this->set("pts_agilite", ($this->get("pts_agilite")+1));
+        }
+        // si l'adversaire meurt l'attaquant gagne ses points de vie
+        if ($personnageSubirAttaque->get("pts_vie") <= 0) {
+            $this->set("pts_vie", ($this->get("pts_vie") + $ptsVieSubirAttaque));
+        }
+        $this->update();
+    
+        return false ; 
+        exit;
+    };
+}
+
+
+// --------------------- DEFENDRE (EN RIPOSTE) -------------------------------
+/**
+ * role : determine si le personnage attaqué se defend
+ * calcul et insert les points de vie en bdd
+ * @param : id de du personnage attaqué
+ * @return : true si la defence à reussi , sinon false
+ * obs : se defend si les pts de resistance du personnage attaqué sont sup ou egal aux pts de force du personnage attaquant
+ */
+function defendreRiposte ($idSubirAttaque) {// 15
+    $forceAttaquant = $this->get("pts_force");
+    $personnageSubirAttaque = new personnage($idSubirAttaque); //17
+    $resistanceSubirAttaque = $personnageSubirAttaque->get("pts_resistance");
+    $ptsVieSubirAttaque = $personnageSubirAttaque->get("pts_vie");
+    if(intval( $resistanceSubirAttaque) >= intval($forceAttaquant)) {
+        echo "riposte gagné par l'attaqué (cad l'attaquant inititial) : true / ";
+        // combat gagné par l'attaquant 
+
+        // points de vie gangé par l'attaqué initial : 2 point de vie.
+        
+
+        // points perdu par l'attaquant initial : 1 pt de vie
+        
+    
+        return false ; 
+        exit;
+    } else {
+        // pts gagne par attaquant initial : 
+            // un point d'agilité (ça motive ! ), ou un point de vie si on a déjà 15 points d'agilité.
+            // on tue l'adversaire, on récupère en plus les points de vie qui lui restaient juste avant le combat.
+
+        // pts perdu par adversaire initil : 2 points de vie
+        echo "riposte gagné par l'attaquant (cad l'attaqué inititial)  : false / ";
+        
+        echo "defendre combat gagné par l'attaqué ";
+        return false ; 
+        exit;
+    };
+}
+
+// --------------------- RIPOSTER -------------------------------
 /**
  * role : determine si le personnage attaqué riposte
  * calcul et insert les points d'agilité en bdd
@@ -150,17 +267,78 @@ function esquiver ($idSubirAttaque) {
  */
 function riposte ($idSubirAttaque) {
     $forceAttaquant = $this->get("pts_force");
+    
     $personnageSubirAttaque = new personnage($idSubirAttaque);
     $forceSubirAttaque = $personnageSubirAttaque->get("pts_force");
     if(intval($forceSubirAttaque) > intval($forceAttaquant)) {
-        $personnageSubirAttaque->set("pts_vie", ($personnageSubirAttaque->get("pts_vie")+1));
+        return true;
+        exit;
+    } else { 
+        echo " pas de riposte le combat continue";
+        return false;
+    }
+}
+
+
+
+// --------------------- ESQUIVER (RIPOSTE) ------------------------------- OK
+/**
+ * role : determine si le personnage attaqué à esquiver dans la phase de risposte
+ * calcul et insert les points d'agilité en bdd si esquive reussit
+ * @param : id de du personnage attaqué
+ * @return : true si l'esquive à reussi , sinon false
+ * obs : esquive reussi si pts agilité adversaire est au moins sup à pts force attaquant d'au moins 3 points
+ */
+function esquiverRiposte ($idSubirAttaque) { // 15
+    $forceAttaquant = $this->values["pts_force"]; 
+    $personnageSubirAttaque = new personnage($idSubirAttaque); // 15
+    $personnagePtsVie =  $this->get("pts_vie");
+    $agiliteSubirAttaque =  $personnageSubirAttaque->get("pts_agilite");
+    $result = intval($agiliteSubirAttaque) - intval($forceAttaquant);
+
+    if ($result>=3) {
+        echo "esquive arret combat = egalité";
+        // calcul des points
+
+        // l'adversaire perd 1 point de vie (17)
+        $this->set("pts_vie", (intval($personnagePtsVie)-1));
+        $this->update();
+
+        // l'attaquant transforme un point de force en un point de resistance si 10pt de forces ou plus, (15)
+        if ($personnageSubirAttaque->get("pts_force")>=10) {
+            $personnageSubirAttaque->set("pts_force", $personnageSubirAttaque->values["pts_force"]-1);
+            $personnageSubirAttaque->set("pts_resistance", $personnageSubirAttaque->values["pts_resistance"]+1);
+        }
         $personnageSubirAttaque->update();
         return true;
-    } else { 
+        exit;
+    } else {
+        echo "esquive combat continue";
+        return false;
+    }
+}
+
+
+
+
+
+// RIPOSTE
+// combat gagné
+        
+        /*
+        $personnageSubirAttaque->set("pts_vie", ($personnageSubirAttaque->get("pts_vie")+1));
+        $personnageSubirAttaque->update();
+        
+        */
+
+        // combat perdu
+        /*
         $personnageSubirAttaque->set("pts_vie", ($personnageSubirAttaque->get("pts_vie")-2));
         $personnageSubirAttaque->update();
-        return false; };
-}
+        */
+
+
+
 
 // --------------------- HISTORIQUE MVT -------------------------------
 /**

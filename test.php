@@ -8,7 +8,7 @@
 
  // print_r($_SESSION);
  // instance
- $personnage = new personnage(15);
+ $personnage = new personnage(17);
  // $mvt = new evenement();
  
 // recuperation liste des personnage dans une salle
@@ -26,5 +26,7 @@
 //$idSallle = 1;
 //print_r ($personnage->listePersonnagesSalle ($idSallle)); 
 
-$idSubirAttaque=17;
-$personnage->subirAttaque($idSubirAttaque);
+$idSubirAttaque=15;
+// $personnage->subirAttaque($idSubirAttaque);
+
+$personnage->defendreRiposte ($idSubirAttaque);
