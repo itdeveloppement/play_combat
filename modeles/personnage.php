@@ -98,34 +98,36 @@ public function identifiantValide ($identifiant) {
 // --------------------- SUBIR UNE ATTAQUE -------------------------------
 
 /**
- * role : determine si le personnage attaqué esquive, riposte, ou se defend
- * @param : id de du personnage attaqué
- * @return : true si le personnage attaqué gagne le combat, "esquive" si personne gagne le comat et false si il perd le combat
+ * role : determine le gagant du combat et effectue le calcul des points
+ * @param : id de de l'adversaire
+ * @return : 
  */
-function subirAttaque($idSubirAttaque) {
+function subirAttaque($idAdversaire) {
    
-if ($this->esquiver ($idSubirAttaque)) {
+if ($this->esquiver ($idAdversaire)) {
     exit;
     
-}else if ($this->riposte($idSubirAttaque) ) {
-    $perso = new personnage($idSubirAttaque);
+}else if ($this->riposte($idAdversaire) ) {
+    $perso = new personnage($idAdversaire);
     $perso->subirAttaqueRiposte($this->id());
     exit;
 
-} else if ($this->defendre($idSubirAttaque)) {
+} else if ($this->defendre($idAdversaire)) {
     exit;
 }
 }
 
-
-function subirAttaqueRiposte ($idSubirAttaque) {
-    if ($this->esquiverRiposte ($idSubirAttaque)) {
+// --------------------- EFFECTUER UNE RIPOSTE ------------------------------- OK /
+/**
+ * role : determine le gagnant de la riposte donc du combat et calcul les points
+ * @param : id de de l'adversaire
+ */
+function subirAttaqueRiposte ($idAdversaire) {
+    if ($this->esquiverRiposte ($idAdversaire)) {
         exit;
-    } else if ($this->defendreRiposte($idSubirAttaque)) {
-        // calcul des points
+    } else if ($this->defendreRiposte($idAdversaire)) {
         exit;
     } else {
-        // calcul des points
         exit;
     }
 }
@@ -142,7 +144,7 @@ function esquiver ($idAdversaire) {
     $adversairePtsVie =  $adversaire->get("pts_vie");
     $result = intval($adversaire->get("pts_agilite")) - intval($this->values["pts_force"]);
     if ($result>=3) {
-        echo "esquive arret combat = egalité";
+        echo "esquive reussit le combat s'arrete";
 
         // l'adversaire perd 1 point de vie
         $adversaire->set("pts_vie", (intval($adversairePtsVie)-1));
@@ -157,7 +159,7 @@ function esquiver ($idAdversaire) {
         return true;
         exit;
     } else {
-        echo "esquive combat continue";
+        echo "esquive ratée le combat continu";
         return false;
     }
 }
@@ -217,7 +219,7 @@ function defendre ($idAdversaire) {
 function defendreRiposte ($idAdversaire) {
     $adversaire = new personnage($idAdversaire); //15
     if(intval($adversaire->get("pts_resistance")) >= intval($this->get("pts_force"))) {
-        echo "riposte gagné par l'attaqué (cad l'attaquant inititial)";
+        echo "riposte gagné par l'attaqué (cad l'attaquant inititial) ";
         // combat gagné par l'attaquant initial
 
          //points gagné par l'attaquant initial : ajout un point d'agilite ou un point de vie si deja 15 pt d'agilite
@@ -265,11 +267,11 @@ function defendreRiposte ($idAdversaire) {
 function riposte ($idAdversaire) {
     $personnageSubirAttaque = new personnage($idAdversaire);
     if(intval($personnageSubirAttaque->get("pts_force")) > intval($this->get("pts_force"))) {
-        echo "il y a une ripsote";
+        echo "il y a une ripsote ";
         return true;
         exit;
     } else { 
-        echo " pas de riposte le combat continu";
+        echo " pas de riposte le combat continu ";
         return false;
     }
 }
@@ -286,7 +288,7 @@ function esquiverRiposte ($idAdversaire) {
     $result = intval($personnageAdversaire->get("pts_agilite")) - intval($this->values["pts_force"]);
 
     if ($result>=3) {
-        echo "esquive arret combat = egalité";
+        echo "esquive (riposte) reussit le combat s'arrete (egalité) ";
         // calcul des points
 
         // l'adversaire initial perd 1 point de vie (17)
@@ -302,7 +304,7 @@ function esquiverRiposte ($idAdversaire) {
         return true;
         exit;
     } else {
-        echo "esquive combat continue";
+        echo "esquive (riposte) le combat continu ";
         return false;
     }
 }
