@@ -1,4 +1,6 @@
 <?php 
+
+/*
 // role : test de la fonction
  // initialisation
  include "utils/init.php";
@@ -22,3 +24,9 @@ $idAdversaire=17;
 // print($personnage->subirAttaqueRiposte ($idAdversaire));
 
 print($personnage->subirAttaque($idAdversaire));
+
+// include "templates/pages/test_affichage.php";
+*/
+?>
+
+

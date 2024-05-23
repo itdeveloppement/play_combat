@@ -81,6 +81,7 @@ function avancer() {
  * @Param : neant
  * @return : 
  */
+/*
 function reculer() {
     fetch("update_reculer_personnage_controleur.php")
         .then(response=>{
@@ -93,13 +94,18 @@ function reculer() {
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle)
             
+            if (response.personnage.pts_vie <= 0) {
+                console.log("test");
+                isdead();
+            }
+            
         })
         // recuperation des erreurs
         .catch(erreur=>{
             console.log(erreur);
         });
 };
-
+*/
 //------------------------ TRANSFORMER FORCE - RRESISTANCE ---------------------------------
 /**
  * Role :  appel le controleur php pour la transformation d'un point de force en point de resistance
@@ -220,8 +226,28 @@ function affichageListePerssonagesSalle(listePersonnagesSalle){
 // ----------------- SI PERSONNAGE MORT ------------------------
 
 /**
- * 
+ * role : affiche page rejouer si personnage morts
+ * @param :
+ * @return :
  */
+/*
+function isdead () {
+    zone = document.getElementById("messageDead");
+    zone.style.display = "block";
+    let  template = 
+    `
+    <p>Vous êtes mort !</p>
+    <p>Quitter ou rejouer en creant un nouveau personnage</p>
+    <button class="btn_dead"><a href="deconnexion_controleur.php">Quitter ou rejouer</a></button>
+    `;
+    zone.innerHTML = template;
+
+    // Ajouter les écouteurs d'événements après l'insertion et raffraichir affichage liste personnages ds la salle
+    document.querySelector('.btn_dead').addEventListener('click', function() {
+        zone.style.display = "none";
+    });
+
+}*/
 // ------------------ MODIFICATION AFFICHAGE ----------------------
 /** OBSOLETTE
  * Role : affiche la mise à jour des points de vie et du numero de la salle

@@ -5,7 +5,6 @@
 // Fragment de page : en tête
 include "templates/fragments/head_fragment.php";
 ?>
-
 <body>
     <header>
         <button><a href="deconnexion_controleur.php">Quitter la partie</a></button>
@@ -33,9 +32,7 @@ include "templates/fragments/head_fragment.php";
         <?php include "templates/fragments/mouvements_possible_personnage_fragment.php"; ?>
     </main>
 </body>
-
 <script src="js/app.js" defer></script>
 <?php
-// Fragment de page : footer
 include "templates/fragments/footer_fragment.php";
 ?>

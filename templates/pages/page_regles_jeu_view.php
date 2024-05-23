@@ -1,11 +1,9 @@
 <?php
 // Template de page : page du jeu
 // Paramètres : neant
-
 // Fragment de page : en tête
 include "templates/fragments/head_fragment.php";
 ?>
-
 <body>
     <header>
         <button><a href="afficher_page_jeu_controleur.php">Retourner jouer</a></button>
@@ -29,7 +27,6 @@ include "templates/fragments/head_fragment.php";
         <p>Tu peux transformer un point de force en point de résistance, ou réciproquement, sela consomme 3 points d’agilité. Cela ne permet pas de dépasser 15 points de force ou 15 points de résistance.</p>
     </main>
 </body>
-
 <?php
 // Fragment de page : footer
 include "templates/fragments/footer_fragment.php";

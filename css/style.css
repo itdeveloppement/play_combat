@@ -4,9 +4,16 @@
     flex-wrap: wrap;
 }
 body {
-
+    
 }
-
+/* message personnage mort */
+/*
+#messageDead {
+    color: red;
+    background-color: brown;
+    display: none; 
+}
+*/
 /* icon oeil mot de passe */
 
 .chpObligatoire {
