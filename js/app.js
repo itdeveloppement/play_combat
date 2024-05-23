@@ -42,6 +42,9 @@ function attaquer(idSubirAttaque) {
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle);
             console.log(response);
+            if (response.personnage.pts_vie <= 0) {
+                isdead();
+            }
         })
         // recuperation des erreurs
         .catch(erreur=>{
@@ -69,6 +72,9 @@ function avancer() {
             // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle);
+            if (response.personnage.pts_vie <= 0) {
+                isdead();
+            }
         })
         // recuperation des erreurs
         .catch(erreur=>{
