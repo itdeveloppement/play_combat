@@ -7,11 +7,9 @@
 document.getElementById("btnAvancer").addEventListener("click", ()=> {
     avancer();
 });
-
 document.getElementById("btnReculer").addEventListener("click", ()=> { 
     reculer();
 });
-
 document.getElementById("btnForce").addEventListener("click", ()=> { 
     force();
 });
@@ -95,12 +93,10 @@ function reculer() {
             // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle)
-            /*
             if (response.personnage.pts_vie <= 0) {
-                console.log("test");
                 isdead();
             }
-            */
+            
         })
         // recuperation des erreurs
         .catch(erreur=>{

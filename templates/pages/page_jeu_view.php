@@ -15,6 +15,9 @@ include "templates/fragments/head_fragment.php";
         <!-- salle -->
         <p>Salle numéro : <span id="salle"><?= $personnage->get("salle"); ?></span></p>
 
+        <!-- message si personnage mort-->
+        <?php include "templates/fragments/message_isdead_fragment.php"; ?>
+
         <!-- caracteristique du personnage -->
         <h2>Carcateristiques du personnage</h2>
         <?php include "templates/fragments/caracteristiques_personnage_fragment.php"; ?>
