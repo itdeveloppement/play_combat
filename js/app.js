@@ -7,9 +7,11 @@
 document.getElementById("btnAvancer").addEventListener("click", ()=> {
     avancer();
 });
+
 document.getElementById("btnReculer").addEventListener("click", ()=> { 
     reculer();
 });
+
 document.getElementById("btnForce").addEventListener("click", ()=> { 
     force();
 });
@@ -81,7 +83,7 @@ function avancer() {
  * @Param : neant
  * @return : 
  */
-/*
+
 function reculer() {
     fetch("update_reculer_personnage_controleur.php")
         .then(response=>{
@@ -93,19 +95,19 @@ function reculer() {
             // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle)
-            
+            /*
             if (response.personnage.pts_vie <= 0) {
                 console.log("test");
                 isdead();
             }
-            
+            */
         })
         // recuperation des erreurs
         .catch(erreur=>{
             console.log(erreur);
         });
 };
-*/
+
 //------------------------ TRANSFORMER FORCE - RRESISTANCE ---------------------------------
 /**
  * Role :  appel le controleur php pour la transformation d'un point de force en point de resistance
@@ -230,7 +232,6 @@ function affichageListePerssonagesSalle(listePersonnagesSalle){
  * @param :
  * @return :
  */
-/*
 function isdead () {
     zone = document.getElementById("messageDead");
     zone.style.display = "block";
@@ -247,7 +248,7 @@ function isdead () {
         zone.style.display = "none";
     });
 
-}*/
+}
 // ------------------ MODIFICATION AFFICHAGE ----------------------
 /** OBSOLETTE
  * Role : affiche la mise à jour des points de vie et du numero de la salle
