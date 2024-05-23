@@ -6,7 +6,7 @@ class evenement extends _model {
  protected $table = "evenement";
  protected $fields = [
     "personnage",
-    "adverssaire",
+    "adversaire",
     "evenement",
     "salle",
     "pts_vie",
@@ -30,7 +30,7 @@ class evenement extends _model {
  */
 public function histoEvents($id){
     // int bdd
-    $sql = "SELECT `id`, `adverssaire`, `evenement`, `salle`, `pts_vie`, `pts_force`, `pts_agilite`, `pts_resistance` FROM `$this->table` WHERE `personnage` = :id ORDER BY `created_date` DESC
+    $sql = "SELECT `id`, `adversaire`, `evenement`, `salle`, `pts_vie`, `pts_force`, `pts_agilite`, `pts_resistance` FROM `$this->table` WHERE `personnage` = :id ORDER BY `created_date` DESC
     LIMIT 15";
     $param = [ ":id" => $id ];
 
@@ -47,17 +47,17 @@ public function histoEvents($id){
 }
 
 /**
- * role : remplace la valeur numerique du champ adverssaire par le nom de l'adverssaire
+ * role : remplace la valeur numerique du champ adversaire par le nom de l'adversaire
  * @param : tableau de l'historique des evenements du personnage
  * @return : le tableau les évenements modifiés
  */
 function modifNomAdverssaireHisto ($tabHisto) {
   $tabHistoAdverssaire = [];
 foreach($tabHisto as $value){
-  // $value["adverssaire"]= $personnage->nomdupersonage($value["adverssaire"]);
-  $personnage = new personnage($value["adverssaire"]);
+  // $value["adversaire"]= $personnage->nomdupersonage($value["adversaire"]);
+  $personnage = new personnage($value["adversaire"]);
   // $personnage->get("nom");
-  $value["adverssaire"]= $personnage->get("nom");
+  $value["adversaire"]= $personnage->get("nom");
   $tabHistoAdverssaire[] = $value;
 
 }

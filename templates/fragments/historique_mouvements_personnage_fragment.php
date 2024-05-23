@@ -23,7 +23,7 @@
         echo "<tr>";
             echo "<td>" . $Value['evenement'] ."</td>";
             echo "<td>" . $Value['salle'] ."</td>";
-            echo "<td>" . $Value['adverssaire'] ."</td>";
+            echo "<td>" . $Value['adversaire'] ."</td>";
             echo "<td>" . $Value['pts_vie'] ."</td>";
             echo "<td>" . $Value['pts_force'] ."</td>";
             echo "<td>" . $Value['pts_agilite'] ."</td>";

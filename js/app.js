@@ -29,19 +29,25 @@ function attaquer(idSubirAttaque) {
         .then(response=>{
             return response.json();
         })  .then (response=>{
-           
+           // console.log(response.personnage.pts_force);
+            // affichage des modifciations
+            document.getElementById('ptsVie').textContent = response.personnage.pts_vie;
+            document.getElementById('ptsForce').value = response.personnage.pts_force;
+            document.getElementById('ptsForce2').textContent = response.personnage.pts_force;
+            document.getElementById('ptsResistance').value = response.personnage.pts_resistance;
+            document.getElementById('ptsResistance2').textContent = response.personnage.pts_resistance;
+            document.getElementById('ptsAgilite').value = response.personnage.pts_agilite;
+            document.getElementById('ptsAgilite2').textContent = response.personnage.pts_agilite;
+            // afficher historique et liste personnages dans la salle
+            affichageHistorique(response.historique);
+            affichageListePerssonagesSalle(response.listePersonnageSalle);
             console.log(response);
         })
         // recuperation des erreurs
         .catch(erreur=>{
             console.log(erreur);
         });
-
-    
 }
-
-
-
 
 //------------------------ MOUVEMENT ---------------------------------
 /**
@@ -54,7 +60,7 @@ function avancer() {
         .then(response=>{
             return response.json();
         })  .then (response=>{
-           
+            
             // affichage des modifciations
             document.getElementById('salle').textContent = response.personnage.salle;
             document.getElementById('ptsVie').textContent = response.personnage.pts_vie;
@@ -62,7 +68,7 @@ function avancer() {
             document.getElementById('ptsAgilite2').textContent = response.personnage.pts_agilite;
             // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
-            affichageListePerssonagesSalle(response.listePersonnageSalle)
+            affichageListePerssonagesSalle(response.listePersonnageSalle);
         })
         // recuperation des erreurs
         .catch(erreur=>{
@@ -159,13 +165,13 @@ function affichageHistorique(historiques){
         `
         <tr>
             <td> ${historique.evenement !== null ? historique.evenement : ''} </td>
-                <td> ${historique.salle !== null ? historique.salle : ''} </td>
-                <td> ${historique.adverssaire !== null ? historique.adverssaire : ''} </td>
-                <td> ${historique.pts_vie !== null ? historique.pts_vie : ''} </td>
-                <td> ${historique.pts_force !== null ? historique.pts_force : ''} </td>
-                <td> ${historique.pts_agilite !== null ? historique.pts_agilite : ''} </td>
-                <td> ${historique.pts_resistance !== null ? historique.pts_resistance : ''} </td>
-            </tr>
+            <td> ${historique.salle !== null ? historique.salle : ''} </td>
+            <td> ${historique.adversaire !== null ? historique.adversaire : ''} </td>
+            <td> ${historique.pts_vie !== null ? historique.pts_vie : ''} </td>
+            <td> ${historique.pts_force !== null ? historique.pts_force : ''} </td>
+            <td> ${historique.pts_agilite !== null ? historique.pts_agilite : ''} </td>
+            <td> ${historique.pts_resistance !== null ? historique.pts_resistance : ''} </td>
+        </tr>
         `;
         zoneHistorique.innerHTML = template;
 });
@@ -211,21 +217,11 @@ function affichageListePerssonagesSalle(listePersonnagesSalle){
 
 
 
+// ----------------- SI PERSONNAGE MORT ------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/**
+ * 
+ */
 // ------------------ MODIFICATION AFFICHAGE ----------------------
 /** OBSOLETTE
  * Role : affiche la mise à jour des points de vie et du numero de la salle
@@ -246,7 +242,6 @@ function affichageModifTest(response){
     `;
     zone2.innerHTML = template2;
 };
-
 
 /** OBSOLETTE
  * Role : affiche la mise à jour des caracteristique d'un personnage

@@ -100,19 +100,22 @@ public function identifiantValide ($identifiant) {
 /**
  * role : determine le gagant du combat et effectue le calcul des points
  * @param : id de de l'adversaire
- * @return : 
+ * @return : return true si la procedure subir une attaque c'est bien deroulée, sinon false
  */
 function subirAttaque($idAdversaire) {
-   
+  
 if ($this->esquiver ($idAdversaire)) {
+    return true;
     exit;
     
 }else if ($this->riposte($idAdversaire) ) {
     $perso = new personnage($idAdversaire);
     $perso->subirAttaqueRiposte($this->id());
+    return true;
     exit;
 
 } else if ($this->defendre($idAdversaire)) {
+    return true;
     exit;
 }
 }
@@ -121,13 +124,17 @@ if ($this->esquiver ($idAdversaire)) {
 /**
  * role : determine le gagnant de la riposte donc du combat et calcul les points
  * @param : id de de l'adversaire
+ * @return : true si la procedure de riposte c'est bien deroulée, sinon false
  */
 function subirAttaqueRiposte ($idAdversaire) {
     if ($this->esquiverRiposte ($idAdversaire)) {
+        return true;
         exit;
     } else if ($this->defendreRiposte($idAdversaire)) {
+        return true;
         exit;
     } else {
+        return true;
         exit;
     }
 }
@@ -141,25 +148,55 @@ function subirAttaqueRiposte ($idAdversaire) {
  */
 function esquiver ($idAdversaire) {
     $adversaire = new personnage($idAdversaire);
-    $adversairePtsVie =  $adversaire->get("pts_vie");
+    $adversaireAgilite =  $adversaire->get("pts_agilite");
     $result = intval($adversaire->get("pts_agilite")) - intval($this->values["pts_force"]);
     if ($result>=3) {
-        echo "esquive reussit le combat s'arrete";
+        // // echo "esquive reussit le combat s'arrete";
 
-        // l'adversaire perd 1 point de vie
-        $adversaire->set("pts_vie", (intval($adversairePtsVie)-1));
+        // l'adversaire perd 1 point d'agilite
+        $adversaire->set("pts_agilite", (intval($adversaireAgilite)-1));
         $adversaire->update();
-
+        // creation historique evenement adversaire
+        $historiqueAdverssaire = new evenement();
+        $historiqueAdverssaire->set("personnage", $idAdversaire);
+        $historiqueAdverssaire->set("adversaire", $this->id());
+        $historiqueAdverssaire->set("evenement", "ESQ");
+        $historiqueAdverssaire->set("salle", intval($adversaire->get("salle")));
+        $historiqueAdverssaire->set("pts_agilite", -1);
+        $historiqueAdverssaire->set("created_date", date('Y-m-d H:i:s'));
+        $historiqueAdverssaire->insert();
+        
         // l'attaquant transforme un point de force en un point de resistance si 10pt de forces ou plus,
         if ($this->get("pts_force")>=10) {
-            $this->set("pts_force", $this->values["pts_force"]-1);
-            $this->set("pts_resistance", $this->values["pts_resistance"]+1);
+            $this->set("pts_force", intval($this->values["pts_force"]-1));
+            $this->set("pts_resistance", intval($this->values["pts_resistance"]+1));
+            $this->update();
+            // creation historique evenement attaquant
+            $historiqueAttaquant = new evenement();
+            $historiqueAttaquant->set("personnage", $this->id());
+            $historiqueAttaquant->set("adversaire", $idAdversaire);
+            $historiqueAttaquant->set("evenement", "ATT");
+            $historiqueAttaquant->set("salle", intval($adversaire->get("salle")));
+            $historiqueAttaquant->set("pts_force", -1);
+            $historiqueAttaquant->set("pts_resistance", 1);
+            $historiqueAttaquant->set("created_date", date('Y-m-d H:i:s'));
+            $historiqueAttaquant->insert();
+        
+        } else { 
+            // creation historique evenement attaquant
+            $historiqueAttaquant = new evenement();
+            $historiqueAttaquant->set("personnage", $this->id());
+            $historiqueAttaquant->set("adversaire", $idAdversaire);
+            $historiqueAttaquant->set("evenement", "ATT");
+            $historiqueAttaquant->set("salle", $adversaire->get("salle"));
+            $historiqueAttaquant->set("created_date", date('Y-m-d H:i:s'));
+            $historiqueAttaquant->insert(); 
         }
-        $this->update();
+        
         return true;
         exit;
     } else {
-        echo "esquive ratée le combat continu";
+        // echo "esquive ratée le combat continu";
         return false;
     }
 }
@@ -174,84 +211,73 @@ function esquiver ($idAdversaire) {
 function defendre ($idAdversaire) {
     $adversaire = new personnage($idAdversaire);
     if(intval($adversaire->get("pts_resistance")) >= intval($this->get("pts_force"))) {
-        echo "defendre combat gagné par l'attaqué ";
+        // echo "defendre combat gagné par l'attaqué ";
         // points gagné par l'adversaire : neant
+        // creation historique evenement adversaire
+        $historiqueAdverssaire = new evenement();
+        $historiqueAdverssaire->set("personnage", $idAdversaire);
+        $historiqueAdverssaire->set("adversaire", $this->id());
+        $historiqueAdverssaire->set("evenement", "DEF");
+        $historiqueAdverssaire->set("salle", $adversaire->get("salle"));
+        $historiqueAdverssaire->set("created_date", date('Y-m-d H:i:s'));
+        $historiqueAdverssaire->insert();
 
         // points perdu par l'attaquant : 1 point de vie.
         $this->set("pts_vie", ($this->get("pts_vie") - 1));
         $this->update();
-       
+        // creation historique evenement attaquant
+        $historiqueAttaquant = new evenement();
+        $historiqueAttaquant->set("personnage", $this->id());
+        $historiqueAttaquant->set("adversaire", $idAdversaire);
+        $historiqueAttaquant->set("evenement", "ATT");
+        $historiqueAttaquant->set("salle", $adversaire->get("salle"));
+        $historiqueAttaquant->set("pts_vie", 1);
+        $historiqueAttaquant->set("created_date", date('Y-m-d H:i:s'));
+        $historiqueAttaquant->insert();
         return true ;
         exit;
     } else {
-        echo "defence combat gagné par l'attaquant ";
+        // echo "defence combat gagné par l'attaquant ";
         // combat gagné par l'attaquant 
 
         // points de vie perdu par l'attaqué : en points de vie la différence entre notre résistance et la force de l'attaque.
         $result = intval($this->get("pts_force")) - intval($adversaire->get("pts_resistance"));
         $adversaire->set("pts_vie", ($adversaire->get("pts_vie")-$result));
         $adversaire->update();
+        // creation historique evenement adversaire
+        $historiqueAdverssaire = new evenement();
+        $historiqueAdverssaire->set("personnage", $idAdversaire);
+        $historiqueAdverssaire->set("adversaire", $this->id());
+        $historiqueAdverssaire->set("evenement", "DEF");
+        $historiqueAdverssaire->set("salle", $adversaire->get("salle"));
+        $historiqueAdverssaire->set("pts_vie", (-$result));
+        $historiqueAdverssaire->set("created_date", date('Y-m-d H:i:s'));
+        $historiqueAdverssaire->insert();
 
+        // creation historique evenement attaquant
+        $historiqueAttaquant = new evenement();
+        $historiqueAttaquant->set("personnage", $this->id());
+        $historiqueAttaquant->set("adversaire", $idAdversaire);
+        $historiqueAttaquant->set("evenement", "ATT");
+        $historiqueAttaquant->set("salle", $adversaire->get("salle"));
+        $historiqueAttaquant->set("created_date", date('Y-m-d H:i:s'));
+        
         // points gagné par l'attaquant : ajout un point d'agilite ou un point de vie si deja 15 pt d'agilite
         if ($this->get("pts_agilite") > 15) {
             $this->set("pts_vie", ($this->get("pts_vie")+1));
+            $historiqueAttaquant->set("pts_vie", 1);
+
         } else {
             $this->set("pts_agilite", ($this->get("pts_agilite")+1));
+            $historiqueAttaquant->set("pts_agilite", 1);
         }
         // si l'adversaire meurt l'attaquant gagne ses points de vie
         if ($adversaire->get("pts_vie") <= 0) {
             $this->set("pts_vie", $this->get("pts_vie") + $adversaire->get("pts_vie"));
+            $historiqueAttaquant->set("pts_vie", $adversaire->get("pts_vie"));
         }
         $this->update();
-    
-        return false ; 
-        exit;
-    };
-}
-
-// --------------------- DEFENDRE (EN RIPOSTE) ------------------------------- OK/
-/**
- * role : determine si l'adversaire se defend dans une ripsote et calcul des points
- * @param : id de de l'adversaire
- * @return : true si la defence à reussi , sinon false
- * obs : l'adversaire se defend si ses pts de resistance sont sup ou egal aux pts de force du personnage attaquant
- */
-function defendreRiposte ($idAdversaire) {
-    $adversaire = new personnage($idAdversaire); //15
-    if(intval($adversaire->get("pts_resistance")) >= intval($this->get("pts_force"))) {
-        echo "riposte gagné par l'attaqué (cad l'attaquant inititial) ";
-        // combat gagné par l'attaquant initial
-
-         //points gagné par l'attaquant initial : ajout un point d'agilite ou un point de vie si deja 15 pt d'agilite
-         if ($adversaire->get("pts_agilite") > 15) {
-            $adversaire->set("pts_vie", ($adversaire->get("pts_vie")+1));
-        } else {
-            $adversaire->set("pts_agilite", ($adversaire->get("pts_agilite")+1));
-        }
-        // si l'adversaire meurt l'attaquant initial gagne ses points de vie
-        if ($this->get("pts_vie") <= 0) {
-            $adversaire->set("pts_vie", ($adversaire->get("pts_vie") + $adversaire->get("pts_vie")));
-        }
-        $adversaire->update();
-
-        // pts perdu par adversaire initil : 2 points de vie
-        $this->set("pts_vie", $this->get("pts_vie")-2);
-        $this->update();
-        
-        return false ; 
-        exit;
-
-    } else {
-        echo "riposte gagné par l'attaquant (cad l'attaqué inititial) ";
-        // combat gagnépar l'attaqué initial
-
-        // points de vie gagné par l'attaqué initial : 2 point de vie.
-        $this->set("pts_vie", $this->get("pts_vie")+2);
-        $this->update();
-
-        // points de vie perdu par l'attaquant initial : 1 pt de vie
-        $adversaire->set("pts_vie", $adversaire->get("pts_vie")-1);
-        $adversaire->update();
+        $historiqueAttaquant->insert();
         return false ; 
         exit;
     };
@@ -265,13 +291,13 @@ function defendreRiposte ($idAdversaire) {
  * obs : si la force de l'adversaire est strictement sup à la force de l'attaquant, riposte reussit
  */
 function riposte ($idAdversaire) {
-    $personnageSubirAttaque = new personnage($idAdversaire);
-    if(intval($personnageSubirAttaque->get("pts_force")) > intval($this->get("pts_force"))) {
-        echo "il y a une ripsote ";
+    $personnageAdversaire = new personnage($idAdversaire);
+    if(intval($personnageAdversaire->get("pts_force")) > intval($this->get("pts_force"))) {
+        // echo "il y a une ripsote ";
         return true;
         exit;
     } else { 
-        echo " pas de riposte le combat continu ";
+        // echo " pas de riposte le combat continu ";
         return false;
     }
 }
@@ -288,25 +314,131 @@ function esquiverRiposte ($idAdversaire) {
     $result = intval($personnageAdversaire->get("pts_agilite")) - intval($this->values["pts_force"]);
 
     if ($result>=3) {
-        echo "esquive (riposte) reussit le combat s'arrete (egalité) ";
+        // echo "esquive (riposte) reussit le combat s'arrete (egalité) ";
         // calcul des points
 
         // l'adversaire initial perd 1 point de vie (17)
         $this->set("pts_vie", (intval($this->get("pts_vie"))-1));
+        $historiqueAttaquant = new evenement();
+        $historiqueAttaquant->set("personnage", $this->id());
+        $historiqueAttaquant->set("adversaire", $idAdversaire);
+        $historiqueAttaquant->set("evenement", "RIP");
+        $historiqueAttaquant->set("salle", $this->get("salle"));
+        $historiqueAttaquant->set("created_date", date('Y-m-d H:i:s'));
+        $historiqueAttaquant->insert();
         $this->update();
 
         // l'attaquant initial transforme un point de force en un point de resistance si 10pt de forces ou plus, (15)
         if ($personnageAdversaire->get("pts_force")>=10) {
             $personnageAdversaire->set("pts_force", $personnageAdversaire->values["pts_force"]-1);
             $personnageAdversaire->set("pts_resistance", $personnageAdversaire->values["pts_resistance"]+1);
+            // creation historique evenement adversaire
+            $historiqueAdverssaire = new evenement();
+            $historiqueAdverssaire->set("personnage", $idAdversaire);
+            $historiqueAdverssaire->set("adversaire", $this->id());
+            $historiqueAdverssaire->set("evenement", "ATT");
+            $historiqueAdverssaire->set("salle", $personnageAdversaire->get("salle"));
+            $historiqueAdverssaire->set("pts_force", -1);
+            $historiqueAdverssaire->set("pts_resistance", 1);
+            $historiqueAdverssaire->set("created_date", date('Y-m-d H:i:s'));
+            $historiqueAdverssaire->insert();
         }
         $personnageAdversaire->update();
         return true;
         exit;
     } else {
-        echo "esquive (riposte) le combat continu ";
+        // echo "esquive (riposte) le combat continu ";
         return false;
     }
+}
+
+// --------------------- DEFENDRE (EN RIPOSTE) ------------------------------- OK/
+/**
+ * role : determine si l'adversaire se defend dans une ripsote et calcul des points
+ * @param : id de de l'adversaire
+ * @return : true si la defence à reussi , sinon false
+ * obs : l'adversaire se defend si ses pts de resistance sont sup ou egal aux pts de force du personnage attaquant
+ */
+function defendreRiposte ($idAdversaire) {
+    $adversaire = new personnage($idAdversaire); //15
+    if(intval($adversaire->get("pts_resistance")) >= intval($this->get("pts_force"))) {
+        // echo "riposte gagné par l'attaqué (cad l'attaquant inititial) ";
+        // combat gagné par l'attaquant initial
+        // historique combat attaquant initial
+        $historiqueAdverssaire = new evenement();
+        $historiqueAdverssaire->set("personnage", $idAdversaire);
+        $historiqueAdverssaire->set("adversaire", $this->id());
+        $historiqueAdverssaire->set("evenement", "ATT");
+        $historiqueAdverssaire->set("salle", $adversaire->get("salle"));
+        $historiqueAdverssaire->set("created_date", date('Y-m-d H:i:s'));
+
+         //points gagné par l'attaquant initial : ajout un point d'agilite ou un point de vie si deja 15 pt d'agilite
+         if ($adversaire->get("pts_agilite") > 15) {
+            $adversaire->set("pts_vie", $adversaire->get("pts_vie")+1);
+            $historiqueAdverssaire->set("pts_vie", 1);
+            
+        } else {
+            $adversaire->set("pts_agilite", ($adversaire->get("pts_agilite")+1));
+            $historiqueAdverssaire->set("pts_agilite", 1);
+        }
+        // si l'adversaire meurt l'attaquant initial gagne ses points de vie
+        if ($this->get("pts_vie") <= 0) {
+            $adversaire->set("pts_vie", ($adversaire->get("pts_vie") + $adversaire->get("pts_vie")));
+            $historiqueAdverssaire->set("pts_vie", $adversaire->get("pts_vie"));
+        }
+        $adversaire->update();
+        $historiqueAdverssaire->insert();
+
+        // pts perdu par adversaire initil : 2 points de vie
+        $this->set("pts_vie", $this->get("pts_vie")-2);
+        $this->update();
+        // historique adversaire
+        $this->set("pts_vie", (intval($this->get("pts_vie"))-1));
+        // historique combat adversaire intitial
+        $historiqueAttaquant = new evenement();
+        $historiqueAttaquant->set("personnage", $this->id());
+        $historiqueAttaquant->set("adversaire", $idAdversaire);
+        $historiqueAttaquant->set("evenement", "RIP");
+        $historiqueAttaquant->set("salle", $this->get("salle"));
+        $historiqueAttaquant->set("pts_vie", -2);
+        $historiqueAttaquant->set("created_date", date('Y-m-d H:i:s'));
+        $historiqueAttaquant->insert();
+        $this->update();
+        
+        return true ; 
+        exit;
+
+    } else {
+        // echo "riposte gagné par l'attaquant (cad l'attaqué inititial) ";
+        // combat gagnépar l'attaqué initial
+
+        // points de vie gagné par l'adversaire initial : 2 point de vie.
+        $this->set("pts_vie", $this->get("pts_vie")+2);
+        $this->update();
+        // historique combat adversaire initial
+        $historiqueAttaquant = new evenement();
+        $historiqueAttaquant->set("personnage", $this->id());
+        $historiqueAttaquant->set("adversaire", $idAdversaire);
+        $historiqueAttaquant->set("evenement", "ATT");
+        $historiqueAttaquant->set("salle", $this->get("salle"));
+        $historiqueAttaquant->set("pts_vie", 2);
+        $historiqueAttaquant->set("created_date", date('Y-m-d H:i:s'));
+        $historiqueAttaquant->insert();
+
+        // points de vie perdu par l'attaquant initial : 1 pt de vie
+        $adversaire->set("pts_vie", $adversaire->get("pts_vie")-1);
+        $adversaire->update();
+        // historique combat adversaire
+        $historiqueAdverssaire = new evenement();
+        $historiqueAdverssaire->set("personnage", $idAdversaire);
+        $historiqueAdverssaire->set("adversaire", $this->id());
+        $historiqueAdverssaire->set("evenement", "ATT");
+        $historiqueAdverssaire->set("salle", $adversaire->get("salle"));
+        $historiqueAdverssaire->set("pts_vie", 1);
+        $historiqueAdverssaire->set("created_date", date('Y-m-d H:i:s'));
+        return true ; 
+        exit;
+    };
 }
 
 // --------------------- HISTORIQUE MVT -------------------------------

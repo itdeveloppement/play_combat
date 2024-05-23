@@ -9,13 +9,16 @@
  $personnage = new personnage(15);
  
 
-$idAdversaire=19;
+$idAdversaire=17;
 
-// $personnage->defendreRiposte ($idSubirAttaque);
-// $personnage->esquiver ($idAdversaire);
-// $personnage->defendre ($idAdversaire);
-// $personnage->defendreRiposte ($idAdversaire);
-// $personnage->esquiverRiposte ($idAdversaire);
-// $personnage->riposte ($idAdversaire);
-// $personnage->subirAttaqueRiposte ($idAdversaire);
-$personnage->subirAttaque($idAdversaire);
+// print($personnage->defendreRiposte ($idAdversaire));
+// print($personnage->esquiver ($idAdversaire));
+// print($personnage->defendre ($idAdversaire));
+
+// print($personnage->esquiverRiposte ($idAdversaire));
+// print($personnage->riposte ($idAdversaire));
+
+// print($personnage->defendreRiposte ($idAdversaire));
+// print($personnage->subirAttaqueRiposte ($idAdversaire));
+
+print($personnage->subirAttaque($idAdversaire));
