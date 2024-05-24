@@ -7,7 +7,7 @@ include "templates/fragments/head_fragment.php";
 ?>
 <body>
     <header>
-        <button><a href="afficher_form_connexion_controleur.php">Quitter</a></button>
+        <button><a href="afficher_page_jeu_controleur.php">Quitter</a></button>
     </header>
     <main >
         <h2>Créer votre personnage</h2>
