@@ -22,11 +22,10 @@ if (! empty ($_GET)) {
     include "templates/pages/form_connexion_view.php"; // erreur
     exit;
 }
-// print_r( $idAdversaire);
+
 // subir une attaque
 $personnage = new personnage($session->getIdConnected()); 
 $personnage->subirAttaque($idAdversaire);
-
 
 // preparer le retour des données a afficher
 $historique = $personnage->histoEvenements();
