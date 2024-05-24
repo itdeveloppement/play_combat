@@ -71,11 +71,16 @@ public function identifiantValide ($identifiant) {
  * @param : le numero de la salle
  * @return : le tableau des noms des personnages indexé par l'id du personnage
  */
- public function listePersonnagesSalle ($idSallle) {
+ public function listePersonnagesSalle ($idSalle) {
+    // supression salle 1 et 11
+    if ($idSalle <1 || $idSalle>10)  {
+        $listePerso = [];
+    return $listePerso;
+    }
     // interogation bdd
     $sql = "SELECT `id`, `nom` FROM `$this->table` WHERE `salle` = :id "; 
    
-    $param = [ ":id" => $idSallle];
+    $param = [ ":id" => $idSalle];
 
     // Préparer / exécuter
     global $bdd;
