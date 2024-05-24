@@ -2,7 +2,7 @@
 
 /**
  * Role : 
- *  deconnecter le personnage de la partie et deconnecter la session
+ *  deconnecter  la session
  *  afficher le formulaire de connexion
  * Parm : neant
  */
@@ -15,6 +15,9 @@ if ( ! $session->isConnected()) {
     include "templates/pages/form_connexion_view.php";
     exit;
 }
+
+// deconnecte la session en passant id = 0
+$session->deconnect();
 
  // initialisation
  include "templates/pages/form_connexion_view.php";

@@ -50,7 +50,6 @@ if  ($session->isConnected()) {
     exit;
 
 } else {
-    echo "test13";
     include "templates/pages/form_connexion_view.php";
     exit;
 }
