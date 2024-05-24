@@ -64,6 +64,26 @@ public function identifiantValide ($identifiant) {
     return true;
 }
 
+// --------------------- CARACTERISTIQUE D4UN PERSONNAGE  -------------------------------
+/**
+ * Role : recupere eles caracteristiques d'un personnage
+ * @param : 
+ * @return : tableau des caracteristique sans le password et log
+ */
+public function caracteristiquesPerso () {
+    $data = [ 
+        "id" => $this->id(),
+    "nom" => $this->get("nom"),
+    "pts_vie" => $this->get("pts_vie"),
+    "pts_force" => $this->get("pts_force"),
+    "pts_agilite" => $this->get("pts_agilite"),
+    "pts_resistance" => $this->get("pts_resistance"),
+    "salle" => $this->get("salle"),
+    ];
+    return $data;
+}
+
+
 // --------------------- LISTE PERSONNAGE DANS UNE SALLLE -------------------------------
 
 /**

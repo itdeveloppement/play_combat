@@ -5,7 +5,10 @@
  */
 ?>
 
-<button id="btnAvancer">Avancer</button>
-<button id="btnReculer">Retour</button>
-<button id="btnForce">Transformer force en resistance</button>
-<button id="btnResistance"></a>Transformer resistance en force</button>
+<div class ="boutonAction">
+    <!-- affciher avec fonction js boutonAction() 
+    <button id="btnAvancer">Avancer</button>
+    <button id="btnReculer">Retour</button>
+    <button id="btnForce">Transformer force en resistance</button>
+    <button id="btnResistance"></a>Transformer resistance en force</button> -->
+</div>

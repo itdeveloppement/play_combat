@@ -3,11 +3,14 @@
  * Parm : neant
  */
 
+
 // ------------------ECOUTEUR MOUVEMENT PERSONNAGE ---------------------------------
 document.getElementById("btnAvancer").addEventListener("click", ()=> {
+   
     avancer();
 });
 document.getElementById("btnReculer").addEventListener("click", ()=> { 
+    
     reculer();
 });
 document.getElementById("btnForce").addEventListener("click", ()=> { 
@@ -160,7 +163,7 @@ function resistance() {
         });
 };
 
-// ------ FCTS AFFICHAGE HISTO ET LISTE PERSONNAGE SALLE ----------------            
+// ------ FCTS AFFICHAGE HISTO  ----------------            
 /** 
  * Role : affiche la mise à jour de l'historique
  * @param {Objet} l'objet contenant les données de l'historique
@@ -186,6 +189,8 @@ function affichageHistorique(historiques){
         zoneHistorique.innerHTML = template;
 });
 }
+
+// ------ FCTS AFFICHAGE LISTE PERSONNAGE SALLE ----------------  
 
 /** 
  * Role : affiche la mise à jour de la liste des personnages dans une salle
@@ -225,9 +230,47 @@ function affichageListePerssonagesSalle(listePersonnagesSalle){
     }
 }
 
+// ------ FCTS AFFICHAGE BOUTONS ACTION ----------------  
 
+/**
+ * role : affiche les boutons des actions possible 
+ * @param : le numero de la salle ou le personnage se situe
+ * @return :
+ */
+function boutonsAction () {
+    fetch("select_personnage_controleur.php")
+    .then(response=>{
+        return response.json();
+    })  .then (response=>{
+    
+    console.log(response);
 
-// ----------------- SI PERSONNAGE MORT ------------------------
+    numSalle = response.salle;
+    zone = document.getElementById("boutonAction");
+    zone.style.display = "block";
+    let template = '';
+    if (numSalle < 11 && numSalle > 0) {
+        template += `
+            <button id="btnAvancer">Avancer</button>
+            <button id="btnReculer">Retour</button>
+        `;
+    }
+    
+    template += `
+        <button id="btnForce">Transformer force en resistance</button>
+        <button id="btnResistance">Transformer resistance en force</button>
+    `;
+    zone.innerHTML = template;
+        
+    })
+    // recuperation des erreurs
+    .catch(erreur=>{
+        console.log(erreur);
+    });
+    
+}
+
+// -----------------    AFFICHAGE MESSAGE SI PERSONNAGE MORT ------------------------
 
 /**
  * role : affiche page rejouer si personnage morts
@@ -251,6 +294,27 @@ function isdead () {
     });
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ------------------ MODIFICATION AFFICHAGE ----------------------
 /** OBSOLETTE
  * Role : affiche la mise à jour des points de vie et du numero de la salle
