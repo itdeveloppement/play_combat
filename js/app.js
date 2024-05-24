@@ -4,13 +4,16 @@
  */
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    boutonsAction()
+});
+
+/*
 // ------------------ECOUTEUR MOUVEMENT PERSONNAGE ---------------------------------
-document.getElementById("btnAvancer").addEventListener("click", ()=> {
-   
+document.getElementById("btnAvancer").addEventListener("click", ()=> { 
     avancer();
 });
 document.getElementById("btnReculer").addEventListener("click", ()=> { 
-    
     reculer();
 });
 document.getElementById("btnForce").addEventListener("click", ()=> { 
@@ -19,7 +22,7 @@ document.getElementById("btnForce").addEventListener("click", ()=> {
 document.getElementById("btnResistance").addEventListener("click", ()=> { 
     resistance();
 });
-
+*/
 // ------------------------ ATTAQUER ---------------------------------
 
 /**
@@ -75,6 +78,7 @@ function avancer() {
             // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle);
+            boutonsAction ();
             if (response.personnage.pts_vie <= 0) {
                 isdead();
             }
@@ -102,6 +106,7 @@ function reculer() {
             // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle)
+            boutonsAction ();
             if (response.personnage.pts_vie <= 0) {
                 isdead();
             }
@@ -243,25 +248,44 @@ function boutonsAction () {
         return response.json();
     })  .then (response=>{
     
-    console.log(response);
-
     numSalle = response.salle;
     zone = document.getElementById("boutonAction");
     zone.style.display = "block";
     let template = '';
     if (numSalle < 11 && numSalle > 0) {
-        template += `
-            <button id="btnAvancer">Avancer</button>
+        template += `  
             <button id="btnReculer">Retour</button>
+            <button id="btnForce">Transformer force en resistance</button>
+            <button id="btnResistance">Transformer resistance en force</button>
+            <button id="btnAvancer">Avancer</button>
         `;
+        zone.innerHTML = template;
+        document.getElementById("btnAvancer").addEventListener("click", ()=> {avancer();});
+        document.getElementById("btnReculer").addEventListener("click", ()=> {reculer();});
+        document.getElementById("btnForce").addEventListener("click", ()=> {force(); });
+        document.getElementById("btnResistance").addEventListener("click", ()=> {resistance();});
+    } else if (numSalle < 1) {
+        template += `
+            <button id="btnForce">Transformer force en resistance</button>
+            <button id="btnResistance">Transformer resistance en force</button>
+            <button id="btnAvancer">Avancer</button>
+        `;
+        zone.innerHTML = template;
+        document.getElementById("btnAvancer").addEventListener("click", ()=> {avancer();});
+        document.getElementById("btnForce").addEventListener("click", ()=> {force(); });
+        document.getElementById("btnResistance").addEventListener("click", ()=> {resistance();});
+    } else if (numSalle > 10) {
+        template += `
+            <button id="btnReculer">Retour</button>
+            <button id="btnForce">Transformer force en resistance</button>
+            <button id="btnResistance">Transformer resistance en force</button>
+        `;
+        zone.innerHTML = template;
+        document.getElementById("btnReculer").addEventListener("click", ()=> {reculer();});
+        document.getElementById("btnForce").addEventListener("click", ()=> {force(); });
+        document.getElementById("btnResistance").addEventListener("click", ()=> {resistance();});
     }
     
-    template += `
-        <button id="btnForce">Transformer force en resistance</button>
-        <button id="btnResistance">Transformer resistance en force</button>
-    `;
-    zone.innerHTML = template;
-        
     })
     // recuperation des erreurs
     .catch(erreur=>{

@@ -18,5 +18,5 @@ if ( ! $session->isConnected()) {
 $personnage = new personnage($session->getIdConnected ());
 $caracteristiques = $personnage->caracteristiquesPerso();
 
-$json = json_encode($data);
+$json = json_encode($caracteristiques);
 echo $json;
