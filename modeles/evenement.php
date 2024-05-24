@@ -14,7 +14,6 @@ class evenement extends _model {
     "pts_agilite",
     "pts_resistance",
     "created_date",
-
  ];
 
  // lien objet
@@ -135,7 +134,7 @@ public function insertMvtReculer ($id, $salle) {
  * @param : id du personnage
  * @return : true si mort, sinon false
  */
-function dead ($id) {
+function dead () {
 
   if ($this->get("pts_vie" == 0)) {
     return true;

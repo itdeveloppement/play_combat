@@ -19,7 +19,7 @@ if ( ! $session->isConnected()) {
 if (! empty ($_GET)) {
     $idAdversaire = $_GET['id'];
 } else {
-    include "templates/pages/form_connexion_view.php";
+    include "templates/pages/form_connexion_view.php"; // erreur
     exit;
 }
 // print_r( $idAdversaire);

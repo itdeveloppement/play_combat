@@ -3,26 +3,14 @@
  * Parm : neant
  */
 
-
 document.addEventListener("DOMContentLoaded", function() {
     boutonsAction()
+    
 });
 
-/*
-// ------------------ECOUTEUR MOUVEMENT PERSONNAGE ---------------------------------
-document.getElementById("btnAvancer").addEventListener("click", ()=> { 
-    avancer();
-});
-document.getElementById("btnReculer").addEventListener("click", ()=> { 
-    reculer();
-});
-document.getElementById("btnForce").addEventListener("click", ()=> { 
-    force();
-});
-document.getElementById("btnResistance").addEventListener("click", ()=> { 
-    resistance();
-});
-*/
+setInterval(function() {
+    rafraichirPage()
+}, 500);
 // ------------------------ ATTAQUER ---------------------------------
 
 /**
@@ -47,7 +35,6 @@ function attaquer(idSubirAttaque) {
             // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle);
-            console.log(response);
             if (response.personnage.pts_vie <= 0) {
                 isdead();
             }
@@ -248,7 +235,8 @@ function boutonsAction () {
         return response.json();
     })  .then (response=>{
     
-    numSalle = response.salle;
+    numSalle = response.personnage.salle;
+    
     zone = document.getElementById("boutonAction");
     zone.style.display = "block";
     let template = '';
@@ -294,7 +282,37 @@ function boutonsAction () {
     
 }
 
-// -----------------    AFFICHAGE MESSAGE SI PERSONNAGE MORT ------------------------
+// --------------------- RAFRAICHIR PAGE ----------------  
+
+/**
+ * role : rafraichir la page toute les x seconde
+ * @param :
+ * @return :
+ */
+function rafraichirPage(){
+    fetch("select_personnage_controleur.php")
+    .then(response=>{
+        return response.json();
+    })  .then (response=>{
+            document.getElementById('salle').textContent = response.personnage.salle;
+            document.getElementById('ptsVie').textContent = response.personnage.pts_vie;
+            document.getElementById('ptsForce').value = response.personnage.pts_force;
+            document.getElementById('ptsForce2').textContent = response.personnage.pts_force;
+            document.getElementById('ptsResistance').value = response.personnage.pts_resistance;
+            document.getElementById('ptsResistance2').textContent = response.personnage.pts_resistance;
+            document.getElementById('ptsAgilite').value = response.personnage.pts_agilite;
+            document.getElementById('ptsAgilite2').textContent = response.personnage.pts_agilite;
+            affichageHistorique(response.historique);
+            affichageListePerssonagesSalle(response.listePersonnageSalle);
+    })
+    // recuperation des erreurs
+    .catch(erreur=>{
+        console.log(erreur);
+    });
+    
+}
+
+// ----------------- AFFICHAGE MESSAGE SI PERSONNAGE MORT ------------------------
 
 /**
  * role : affiche page rejouer si personnage morts
@@ -316,62 +334,4 @@ function isdead () {
     document.querySelector('.btn_dead').addEventListener('click', function() {
         zone.style.display = "none";
     });
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ------------------ MODIFICATION AFFICHAGE ----------------------
-/** OBSOLETTE
- * Role : affiche la mise à jour des points de vie et du numero de la salle
- * @param {Objet} response 
- * @return
- */
-function affichageModifTest(response){
-    // mise à jour numero de salle
-    zone1 = document.getElementById("zone1");
-    let template = `Salle numéro : ${response.salle}</p>`;
-    zone1.innerHTML = template;
-    // mise à jour pts de vie
-    zone2 = document.getElementById("zone2");
-    let  template2 = 
-    `
-    <label for="ptsVie">Points de vie : </label>
-    <progress id="ptsVie" value="${response.pts_vie}" max="100"></progress>
-    `;
-    zone2.innerHTML = template2;
-};
-
-/** OBSOLETTE
- * Role : affiche la mise à jour des caracteristique d'un personnage
- * @param {Objet} response 
- * @return
- */
-function caracteristiquePersonnage(response){
-    document.getElementById('salle').textContent = response.salle;
-    document.getElementById('ptsVie').textContent = response.pts_vie;
-    document.getElementById('ptsAgilite').value = response.pts_agilite;
-    document.getElementById('ptsAgilite2').textContent = response.pts_agilite;
-    document.getElementById('ptsForce').value = response.pts_force;
-    document.getElementById('ptsForce2').textContent = response.pts_force;
-};
-
-
