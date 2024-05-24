@@ -13,6 +13,12 @@
     * password du personnage
  */
 
+ // verification de la connexion
+if ( ! $session->isConnected()) {
+    include "templates/pages/form_connexion_view.php";
+    exit;
+}
+
  // Initialisation
 require_once "utils/init.php";
 if (

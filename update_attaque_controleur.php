@@ -10,8 +10,6 @@
 require_once "utils/init.php";
 
 // verification de la connexion
-// $session = new session ();
-
 if ( ! $session->isConnected()) {
     include "templates/pages/form_connexion_view.php";
     exit;

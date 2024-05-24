@@ -10,5 +10,11 @@
  // initialisation
  include "utils/init.php";
 
+ // verification de la connexion
+if ( ! $session->isConnected()) {
+    include "templates/pages/form_connexion_view.php";
+    exit;
+}
+
  // initialisation
  include "templates/pages/form_connexion_view.php";

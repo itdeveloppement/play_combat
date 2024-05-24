@@ -2,9 +2,7 @@
 
 /**
  * Role : 
- * - vérifier les données de connexion
- * - instancier la saison
- * - affiche la page du jeu dans la salle ou se situe la personnage
+ * - affiche la page de jeu en fonction du statut de connexion (connecté ou pas)
  * Parm : POST
  *  $log : le log de connexion
  *  $pasword : le password de la connexion
@@ -13,37 +11,46 @@
 // Initialisation
 require_once "utils/init.php";
 
-// verification de la connexion
-$session = new session ();
-if ( ! $session->isConnected()) {
+if  ($session->isConnected()) {
+
+    // liste des personnes dans une salle
+    $personnage = new personnage();
+    $personnage->load($session->getIdConnected());
+    $listePersonnagesSalle = $personnage->listePersonnagesSalle($personnage->get("salle"));
+
+    // histroique du personnage
+    $histoEvents = $personnage->histoEvenements();
+
+    include "templates/pages/page_jeu_view.php";
+    exit;
+
+} else if ((isset($_POST["log"]) && isset($_POST["password"]))) {
+
+    // recuperation et controle des données POST
+        $log = $_POST["log"];
+        $password = $_POST["password"];
+    
+    // validation de la connexion et rensegnement session id
+    $personnage = new personnage();
+    if (! $personnage->connexionValide ($log, $password)) {
     include "templates/pages/form_connexion_view.php";
     exit;
-}
+    } 
 
-// recuperation et controle des données POST
-if (! empty($_POST["log"]) && ! empty($_POST["password"])) {
-    $log = $_POST["log"];
-    $password = $_POST["password"];
+    // liste des personnes dans une salle
+    $personnage->load($session->getIdConnected());
+    $listePersonnagesSalle = $personnage->listePersonnagesSalle($personnage->get("salle"));
+
+    // histroique du personnage
+    $histoEvents = $personnage->histoEvenements();
+
+    //actions possible
+
+    include "templates/pages/page_jeu_view.php";
+    exit;
+
 } else {
+    echo "test13";
     include "templates/pages/form_connexion_view.php";
     exit;
 }
-
-// validation de la connexion et rensegnement session id
-$personnage = new personnage();
-if (! $personnage->connexionValide ($log, $password)) {
-   include "templates/pages/form_connexion_view.php";
-   exit;
-} 
-
-// liste des personnes dans une salle
-$personnage->load($session->getIdConnected());
-$listePersonnagesSalle = $personnage->listePersonnagesSalle($personnage->get("salle"));
-
-// histroique du personnage
-$histoEvents = $personnage->histoEvenements();
-
-//actions possible
-
-include "templates/pages/page_jeu_view.php";
-
