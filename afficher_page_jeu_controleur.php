@@ -13,6 +13,13 @@
 // Initialisation
 require_once "utils/init.php";
 
+// verification de la connexion
+$session = new session ();
+if ( ! $session->isConnected()) {
+    include "templates/pages/form_connexion_view.php";
+    exit;
+}
+
 // recuperation et controle des données POST
 if (! empty($_POST["log"]) && ! empty($_POST["password"])) {
     $log = $_POST["log"];
