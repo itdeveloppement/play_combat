@@ -136,7 +136,7 @@ public function insertMvtReculer ($id, $salle) {
  */
 function dead () {
 
-  if ($this->get("pts_vie" == 0)) {
+  if ($this->get("pts_vie" <= 0)) {
     return true;
   } return false;
 

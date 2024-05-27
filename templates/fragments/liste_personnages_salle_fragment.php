@@ -4,6 +4,6 @@
  * param : tableau de la liste des personnages dans une salle
  */
 ?>
-<div class= "flex" id  = "zoneListePersonnage">
+<div  id  = "zoneListePersonnage">
    <!-- creation et affichage de la liste des personnages dans la salle en js -->
 </div>

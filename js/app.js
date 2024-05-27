@@ -59,6 +59,12 @@ function avancer() {
             document.getElementById('ptsVie').textContent = response.personnage.pts_vie;
             document.getElementById('ptsAgilite').value = response.personnage.pts_agilite;
             document.getElementById('ptsAgilite2').textContent = response.personnage.pts_agilite;
+            let main = document.querySelector("main");
+            let numSallePrecedente = response.personnage.salle+1;
+            main.classList.remove(`mainImgS${numSallePrecedente}`);
+            main.classList.add(`mainImgS${response.personnage.salle}`);
+            console.log(main);
+
             // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle);
@@ -87,6 +93,11 @@ function reculer() {
             // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle)
+            let main = document.querySelector("main");
+            let numSallePrecedente = response.personnage.salle+1;
+            main.classList.remove(`mainImgS${numSallePrecedente}`);
+            main.classList.add(`mainImgS${response.personnage.salle}`);
+            console.log(main);
             boutonsAction ();
         })
         // recuperation des erreurs

@@ -6,7 +6,7 @@
 include "templates/fragments/head_fragment.php";
 ?>
 <body>
-    <main >
+    <main class="formInsertPerso mainImgS0" >
     <button><a href="afficher_page_jeu_controleur.php">Quitter</a></button>
         <h2>Créer votre personnage</h2>
         <div>

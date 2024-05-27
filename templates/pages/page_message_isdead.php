@@ -6,7 +6,7 @@
 include "templates/fragments/head_fragment.php";
 ?>
 <body>
-    <main >
+    <main class="mainImgS0">
         <h2>Vous êtes mort !</h2>
         <p>Pour rejouer vous devez recréer un personnage</p>
         <button><a href="deconnexion_controleur.php">Quitter ou rejouer</a></button>

@@ -9,25 +9,25 @@
 include "templates/fragments/head_fragment.php";
 ?>
 <body>
-        <main>
-            <section>
-                <h2>Créer un compte</h2>
-                <button><a href="afficher_form_insert_personnage_controleur.php">Créer un personnage</a></button>
-            </section>
-            <section>
-                <h2>Connectez-vous avec votre identifiant et votre mot de passe</h2>
-                <form method="post" action="afficher_page_jeu_controleur.php">
-                    <div>
-                        <label for="log">Identifiant</label>
-                        <input type="text" name="log" id="log">
-                    </div>
-                    <div >
-                        <label for="password">Mot de passe</label>
-                        <input type="text" name="password" id="password">
-                    </div>
-                    <input type="submit" value="Connectez-vous et jouer">
-                </form>
-            </section>
+        <main class="formConnexion mainImgS0">
+                <section>
+                    <h2>Créer un compte</h2>
+                    <button><a href="afficher_form_insert_personnage_controleur.php">Créer un personnage</a></button>
+                </section>
+                <section>
+                    <h2>Se connecter</h2>
+                    <form method="post" action="afficher_page_jeu_controleur.php">
+                        <div>
+                            <label for="log">Identifiant</label>
+                            <input type="text" name="log" id="log">
+                        </div>
+                        <div >
+                            <label for="password">Mot de passe</label>
+                            <input type="text" name="password" id="password">
+                        </div>
+                        <input type="submit" value="Connectez-vous et jouer">
+                    </form>
+                </section>
         </main>
     </body>
 <?php

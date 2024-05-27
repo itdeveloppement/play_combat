@@ -12,13 +12,6 @@
 
  $personnage = new personnage($session->getIdConnected());
  
- // verification de la connexion
- if ($personnage->isDead()) {
-    $session->deconnect();
-    include "templates/pages/page_message_isdead.php";
-    exit;
-}
-
 // deconnecte la session en passant id = 0
 $session->deconnect();
 

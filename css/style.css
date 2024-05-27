@@ -9,7 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 /*Font Roboto*/
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap');
 /*VARIABLES COLOR ET STYLE*/
 :root {
     /*variable color*/
@@ -19,6 +19,7 @@
     --firstFour: #ffffff;
     --firstFive: #3e8bac;
     /*variable font*/
+    --font: "Reddit Mono", monospace;
     --robotoFont: "Roboto", sans-serif;
     --archivoBlackFont: "Archivo Black", sans-serif;
     /* border radius*/
@@ -33,87 +34,9 @@
 }
 
 .justifyBetewen {
-   
-    justify-content: space-between;
-    
+    justify-content: space-between;  
 }
 
-/* font */
-body {
-    font-family: var(--robotoFont);
-    color: var(--firstFour);
-}
-/* link */
-
-a {
-    text-decoration: none; 
-    color:var( --firstFour) ; 
-}
-ul {
-    list-style: none;
-    gap: 20px;
-}
-header {
-    background-color: var(--firstFive);
-    height: 70px;
-    padding: 5px;
-    align-items: center;
-    
-  
-}
-main {
-    /* width: 1200px; */
-    margin: auto;
-    background-image: url("../images/salles/salle1.jpeg");
-    display: block;
-    background-size:cover;
-    background-repeat:no-repeat;
-    width: 100%;
-    height: 100vh;
-    margin:auto;
-    background-position: center;
-    top:70px;
-}
-h2 {
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-button, input[type="submit"] {
-    flex: 1;
-    padding: 10px;
-    margin: 0 10px;
-    background-color: var( --firstTwo);
-    width: 20%;
-    border: none;
-    border-radius: var(--borderRadius);
-    color: var(--firstFour);
-}
-button:hover, input[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-
-}
-/* historique */
-th, td {
-    padding: 2px;
-    text-align: center; 
-    vertical-align: middle; 
-}
-
-th {
-    background-color: var(--firstFive);
-    height: 30px; 
-}
-
-/* actions possibles */ 
-#boutonAction {
-    display: flex;
-    justify-content:center;
-}
 /* largeur des elements */
 
 .container-1200{
@@ -148,6 +71,99 @@ th {
     width: 50%;
 }
 
+/* font */
+body {
+    font-family: var(--font);
+    color: var(--firstFour);
+}
+/* link */
+a {
+    text-decoration: none; 
+    color:var( --firstFour) ; 
+}
+ul {
+    list-style: none;
+    gap: 20px;
+}
+header {
+    background-color: var(--firstFive);
+    height: 70px;
+    padding: 20px;
+    align-items: center;
+    
+  
+}
+main {
+    /* width: 1200px; */
+    margin: auto;
+    display: block;
+    background-size:cover;
+    background-repeat:no-repeat;
+    width: 100%;
+    height: 100vh;
+    margin:auto;
+    background-position: center;
+    top:70px;
+}
+.mainImgS0 { background-image: url("../images/salles/salle0.jpeg"); }
+.mainImgS1 { background-image: url("../images/salles/salle1.jpeg"); }
+.mainImgS2 { background-image: url("../images/salles/salle2.jpeg"); }
+.mainImgS3 { background-image: url("../images/salles/salle3.jpeg"); }
+.mainImgS4 { background-image: url("../images/salles/salle4.jpeg"); }
+.mainImgS1 { background-image: url("../images/salles/salle5.jpeg"); }
+.mainImgS5 { background-image: url("../images/salles/salle6.jpeg"); }
+.mainImgS6 { background-image: url("../images/salles/salle7.jpeg"); }
+.mainImgS7 { background-image: url("../images/salles/salle8.jpeg"); }
+.mainImgS8 { background-image: url("../images/salles/salle9.jpeg"); }
+.mainImgS9 { background-image: url("../images/salles/salle10.jpeg"); }
+.mainImgS10 { background-image: url("../images/salles/salle11.jpeg"); }
+.mainImgS11 { background-image: url("../images/salles/salle12.jpeg"); }
+
+section {
+    width: 100%;
+}
+h2 {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+button, input[type="submit"] {
+    flex: 1;
+    padding: 10px;
+    margin: 0 10px;
+    background-color: var( --firstTwo);
+    width: 200px;
+    border: none;
+    border-radius: var(--borderRadius);
+    color: var(--firstFour);
+}
+button:hover, input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+/* historique */
+th, td {
+    padding: 2px;
+    text-align: center; 
+    vertical-align: middle; 
+}
+
+th {
+    background-color: var(--firstFive);
+    height: 30px; 
+}
+
+/* actions possibles */ 
+#boutonAction {
+    display: flex;
+    justify-content:center;
+}
+
+
 /* icon oeil mot de passe */
 
 .chpObligatoire {
@@ -179,4 +195,25 @@ th {
 }
 .form_profil div input{
     width: 300px;
+}
+
+/* form connexion */
+.formConnexion, .formInsertPerso {
+    padding: 3%;
+}
+.formConnexion form div label {
+    width: 150px;
+}
+.formConnexion form div {
+    align-items: center;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+/*liste personage */
+#zoneListePersonnage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
 }

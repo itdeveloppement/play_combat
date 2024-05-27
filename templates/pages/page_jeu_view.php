@@ -16,7 +16,7 @@ include "templates/fragments/head_fragment.php";
             </ul>
         </nav>  
     </header>
-    <main> 
+    <main class="mainImgS<?php echo $personnage->get("salle");?>"> 
         <div class = "container-1200">
             <div class = "flex justifyBetewen">
                 <!-- caracteristique du personnage -->

@@ -257,7 +257,7 @@ function defendre ($idAdversaire) {
         $historiqueAttaquant->set("adversaire", $idAdversaire);
         $historiqueAttaquant->set("evenement", "ATT");
         $historiqueAttaquant->set("salle", $adversaire->get("salle"));
-        $historiqueAttaquant->set("pts_vie", 1);
+        $historiqueAttaquant->set("pts_vie", -1);
         $historiqueAttaquant->set("created_date", date('Y-m-d H:i:s'));
         $historiqueAttaquant->insert();
         return true ;
