@@ -5,7 +5,7 @@
  */
 ?>
 
-<div id="boutonAction">
+<div id="boutonAction" >
     <!-- affciher avec fonction js boutonAction() -->
     <?php if ($personnage->get("salle")>0){ 
     echo '<button id="btnReculer">Retour</button>';

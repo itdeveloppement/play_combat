@@ -11,8 +11,9 @@
 require_once "utils/init.php";
 
 // verification de la connexion
-if ( ! $session->isConnected()) {
-    include "templates/pages/form_connexion_view.php";
+if ($personnage->isDead()) {
+    $session->deconnect();
+    include "templates/pages/page_message_isdead.php";
     exit;
 }
 

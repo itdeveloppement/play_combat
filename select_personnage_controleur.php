@@ -17,7 +17,7 @@ if ( ! $session->isConnected()) {
 $personnage = new personnage($session->getIdConnected ());
 
 // verification si personnage vivant
-if (! $personnage->isDead()) {
+if ($personnage->isDead()) {
     $session->deconnect();
     include "templates/pages/page_message_isdead.php";
     exit;

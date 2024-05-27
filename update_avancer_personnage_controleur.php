@@ -21,7 +21,7 @@ $personnage = new personnage($session->getIdConnected());
 $personnage->avancer();
 
 // verification si personnage vivant
-if (! $personnage->isDead()) {
+if ($personnage->isDead()) {
     $session->deconnect();
     include "templates/pages/page_message_isdead.php";
     exit;

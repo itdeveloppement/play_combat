@@ -1,19 +1,147 @@
+/*NORMELAZIED*/
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
 
+/*Font Archivo Black*/
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+/*Font Roboto*/
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/*VARIABLES COLOR ET STYLE*/
+:root {
+    /*variable color*/
+    --firstOne: #222222;
+    --firstTwo: #0e6286;
+    --firstThree: #ebebeb;
+    --firstFour: #ffffff;
+    --firstFive: #3e8bac;
+    /*variable font*/
+    --robotoFont: "Roboto", sans-serif;
+    --archivoBlackFont: "Archivo Black", sans-serif;
+    /* border radius*/
+    --borderRadius: 10px;
+}
+
+/*REGLES GENERALE*/
 .flex {
     display: flex;
+  
     flex-wrap: wrap;
 }
-body {
+
+.justifyBetewen {
+   
+    justify-content: space-between;
     
 }
-/* message personnage mort */
-/*
-#messageDead {
-    color: red;
-    background-color: brown;
-    display: none; 
+
+/* font */
+body {
+    font-family: var(--robotoFont);
+    color: var(--firstFour);
 }
-*/
+/* link */
+a {
+    text-decoration: none;  
+}
+ul {
+    list-style: none;
+}
+header {
+    background-color: var(--firstFive);
+    height: 70px;
+}
+main {
+    /* width: 1200px; */
+    margin: auto;
+    background-image: url("../images/salles/salle1.jpeg");
+    display: block;
+    background-size:cover;
+    background-repeat:no-repeat;
+    width: 100%;
+    height: 100vh;
+    margin:auto;
+    background-position: center;
+    top:70px;
+}
+h2 {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+button {
+
+    padding: 10px;
+    background-color: var( --firstTwo);
+    width: 20%;
+    border: none;
+    border-radius: var(--borderRadius);
+    color: var(--firstFour);
+}
+button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+/* historique */
+th, td {
+    padding: 2px;
+    text-align: center; /* Alignement horizontal centré */
+    vertical-align: middle; /* Alignement vertical centré */
+}
+
+th {
+    background-color: var(--firstFive);
+    height: 30px; 
+}
+
+/* actions possibles */ 
+#boutonAction {
+    display: flex;
+    justify-content: space-between;
+    
+}
+/* largeur des elements */
+
+.container-1200{
+    max-width: 1200px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+.large_15{
+    width: 15%;
+}
+.large_20{
+    width: 20%;
+}
+.large_25{
+    width: 25%;
+}
+.large_30{
+    width: 30%;
+}
+.large_35{
+    width: 35%;
+}
+.large_40{
+    width: 40%;
+}
+.large_45{
+    width: 45%;
+}
+.large_50 {
+    width: 50%;
+}
+
+
 /* icon oeil mot de passe */
 
 .chpObligatoire {
