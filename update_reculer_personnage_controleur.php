@@ -20,6 +20,13 @@ if ( ! $session->isConnected()) {
 $personnage = new personnage($session->getIdConnected());  
 $personnage->reculer();
 
+// verification si personnage vivant
+if (! $personnage->isDead()) {
+    $session->deconnect();
+    include "templates/pages/page_message_isdead.php";
+    exit;
+}
+
 // preparer le retour des données a afficher
 $historique = $personnage->histoEvenements();
 

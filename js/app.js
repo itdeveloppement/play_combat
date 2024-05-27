@@ -35,9 +35,6 @@ function attaquer(idSubirAttaque) {
             // afficher historique et liste personnages dans la salle
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle);
-            if (response.personnage.pts_vie <= 0) {
-                isdead();
-            }
         })
         // recuperation des erreurs
         .catch(erreur=>{
@@ -66,9 +63,6 @@ function avancer() {
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle);
             boutonsAction ();
-            if (response.personnage.pts_vie <= 0) {
-                isdead();
-            }
         })
         // recuperation des erreurs
         .catch(erreur=>{
@@ -94,10 +88,6 @@ function reculer() {
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle)
             boutonsAction ();
-            if (response.personnage.pts_vie <= 0) {
-                isdead();
-            }
-            
         })
         // recuperation des erreurs
         .catch(erreur=>{
@@ -304,9 +294,6 @@ function rafraichirPage(){
             document.getElementById('ptsAgilite2').textContent = response.personnage.pts_agilite;
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle);
-            if (response.personnage.pts_vie <= 0) {
-                isdead();
-            }
     })
     // recuperation des erreurs
     .catch(erreur=>{
@@ -315,7 +302,24 @@ function rafraichirPage(){
     
 }
 
-// ----------------- AFFICHAGE MESSAGE SI PERSONNAGE MORT ------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// OBSOLETTE ----------------- AFFICHAGE MESSAGE SI PERSONNAGE MORT ------------------------
 
 /**
  * role : affiche page rejouer si personnage morts

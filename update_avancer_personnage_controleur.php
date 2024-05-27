@@ -19,6 +19,14 @@ if ( ! $session->isConnected()) {
 // modification des caracteristiques du personnage et insertion histo evenement
 $personnage = new personnage($session->getIdConnected());  
 $personnage->avancer();
+
+// verification si personnage vivant
+if (! $personnage->isDead()) {
+    $session->deconnect();
+    include "templates/pages/page_message_isdead.php";
+    exit;
+}
+
 $historique = $personnage->histoEvenements();
 $numSalle = $personnage->get("salle");
 // preparer et encoder en json le retour des données a afficher

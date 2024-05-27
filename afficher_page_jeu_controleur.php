@@ -11,14 +11,24 @@
 // Initialisation
 require_once "utils/init.php";
 
+// si deja connecté
 if  ($session->isConnected()) {
 
-    // liste des personnes dans une salle
+    
     $personnage = new personnage();
+
+    // verification si personnage vivant
+    if (! $personnage->isDead()) {
+        $session->deconnect();
+        include "templates/pages/page_message_isdead.php";
+        exit;
+    }
+
+    // afficher liste des personnes dans une salle
     $personnage->load($session->getIdConnected());
     $listePersonnagesSalle = $personnage->listePersonnagesSalle($personnage->get("salle"));
 
-    // histroique du personnage
+    // afficher histroique du personnage
     $histoEvents = $personnage->histoEvenements();
 
     include "templates/pages/page_jeu_view.php";
@@ -36,6 +46,13 @@ if  ($session->isConnected()) {
     include "templates/pages/form_connexion_view.php";
     exit;
     } 
+
+    // verification si personnage vivant
+    if (! $personnage->isDead()) {
+        $session->deconnect();
+        include "templates/pages/page_message_isdead.php";
+        exit;
+    }
 
     // liste des personnes dans une salle
     $personnage->load($session->getIdConnected());
