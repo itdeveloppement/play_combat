@@ -10,7 +10,6 @@ include "templates/fragments/head_fragment.php";
         <h2>Vous êtes mort !</h2>
         <p>Pour rejouer vous devez recréer un personnage</p>
         <button><a href="deconnexion_controleur.php">Quitter ou rejouer</a></button>
-        <button><a href="deconnexion_controleur.php">Quitter ou rejouer</a></button>
     </main>
 </body>
 <script src="js/form_insert_personnage_controleur.js" defer></script>

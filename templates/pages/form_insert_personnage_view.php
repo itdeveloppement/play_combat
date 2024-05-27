@@ -6,10 +6,8 @@
 include "templates/fragments/head_fragment.php";
 ?>
 <body>
-    <header>
-        <button><a href="afficher_page_jeu_controleur.php">Quitter</a></button>
-    </header>
     <main >
+    <button><a href="afficher_page_jeu_controleur.php">Quitter</a></button>
         <h2>Créer votre personnage</h2>
         <div>
             <?php include "templates/fragments/form_insert_personnage_fragment.php"; ?>

@@ -41,6 +41,7 @@ public function connexionValide ($log, $password) {
         if (($logPersonnage==$log) && (password_verify($password, $passwordPersonnage))) {
             $session = new session();
             $session->connect($personnage);
+            
             return true;
         }   
     }

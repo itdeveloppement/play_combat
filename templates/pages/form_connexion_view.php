@@ -9,8 +9,6 @@
 include "templates/fragments/head_fragment.php";
 ?>
 <body>
-    <header>
-    </header>
         <main>
             <section>
                 <h2>Créer un compte</h2>

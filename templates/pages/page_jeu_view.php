@@ -11,8 +11,8 @@ include "templates/fragments/head_fragment.php";
         <p>Salle numéro : <span id="salle"><?= $personnage->get("salle"); ?></span></p>
         <nav>
             <ul class="flex">
-                <li><a href="deconnexion_controleur.php">Quitter la partie</a></li>
                 <li><a href="afficher_regles_jeu.php">Regles du jeu</a></li>
+                <li><a href="deconnexion_controleur.php">Quitter la partie</a></li>
             </ul>
         </nav>  
     </header>

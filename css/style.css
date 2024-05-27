@@ -44,15 +44,22 @@ body {
     color: var(--firstFour);
 }
 /* link */
+
 a {
-    text-decoration: none;  
+    text-decoration: none; 
+    color:var( --firstFour) ; 
 }
 ul {
     list-style: none;
+    gap: 20px;
 }
 header {
     background-color: var(--firstFive);
     height: 70px;
+    padding: 5px;
+    align-items: center;
+    
+  
 }
 main {
     /* width: 1200px; */
@@ -71,16 +78,17 @@ h2 {
     margin-bottom: 20px;
     margin-top: 20px;
 }
-button {
-
+button, input[type="submit"] {
+    flex: 1;
     padding: 10px;
+    margin: 0 10px;
     background-color: var( --firstTwo);
     width: 20%;
     border: none;
     border-radius: var(--borderRadius);
     color: var(--firstFour);
 }
-button:hover {
+button:hover, input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
@@ -92,8 +100,8 @@ table {
 /* historique */
 th, td {
     padding: 2px;
-    text-align: center; /* Alignement horizontal centré */
-    vertical-align: middle; /* Alignement vertical centré */
+    text-align: center; 
+    vertical-align: middle; 
 }
 
 th {
@@ -104,8 +112,7 @@ th {
 /* actions possibles */ 
 #boutonAction {
     display: flex;
-    justify-content: space-between;
-    
+    justify-content:center;
 }
 /* largeur des elements */
 
@@ -140,7 +147,6 @@ th {
 .large_50 {
     width: 50%;
 }
-
 
 /* icon oeil mot de passe */
 

@@ -5,14 +5,8 @@
  */
 ?>
 
+
 <div id="boutonAction" >
-    <!-- affciher avec fonction js boutonAction() -->
-    <?php if ($personnage->get("salle")>0){ 
-    echo '<button id="btnReculer">Retour</button>';
-    } ?> 
-    <button id="btnForce">Transformer force en resistance</button>
-    <button id="btnResistance"></a>Transformer resistance en force</button> 
-    <?php if ($personnage->get("salle")<11){ 
-    echo '<button id="btnAvancer">Avancer</button>';
-    } ?>
+    <!-- affichage avec fonction js bouton action-->
 </div>
+

@@ -10,6 +10,8 @@
  // initialisation
  include "utils/init.php";
 
+ $personnage = new personnage($session->getIdConnected());
+ 
  // verification de la connexion
  if ($personnage->isDead()) {
     $session->deconnect();

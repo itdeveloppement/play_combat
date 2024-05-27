@@ -14,8 +14,7 @@ require_once "utils/init.php";
 // si deja connecté
 if  ($session->isConnected()) {
 
-    
-    $personnage = new personnage();
+    $personnage = new personnage($session->getIdConnected());
 
     // verification si personnage vivant
     if ($personnage->isDead()) {

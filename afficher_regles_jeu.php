@@ -5,14 +5,17 @@
  * Parm : neant
  */
 
+
 // Initialisation
 require_once "utils/init.php";
+$personnage = new personnage($session->getIdConnected());
 
 // verification de la connexion
-if ( ! $session->isConnected()) {
+if (! $session->isConnected()) {
     include "templates/pages/form_connexion_view.php";
     exit;
 }
+
 // verification si personnage vivant
 if ($personnage->isDead()) {
     $session->deconnect();

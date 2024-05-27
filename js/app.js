@@ -228,16 +228,17 @@ function boutonsAction () {
     numSalle = response.personnage.salle;
     
     zone = document.getElementById("boutonAction");
-    zone.style.display = "block";
     let template = '';
     if (numSalle < 11 && numSalle > 0) {
-        template += `  
+        template += 
+        `  
             <button id="btnReculer">Retour</button>
             <button id="btnForce">Transformer force en resistance</button>
             <button id="btnResistance">Transformer resistance en force</button>
             <button id="btnAvancer">Avancer</button>
         `;
         zone.innerHTML = template;
+        
         document.getElementById("btnAvancer").addEventListener("click", ()=> {avancer();});
         document.getElementById("btnReculer").addEventListener("click", ()=> {reculer();});
         document.getElementById("btnForce").addEventListener("click", ()=> {force(); });
@@ -249,6 +250,7 @@ function boutonsAction () {
             <button id="btnAvancer">Avancer</button>
         `;
         zone.innerHTML = template;
+       
         document.getElementById("btnAvancer").addEventListener("click", ()=> {avancer();});
         document.getElementById("btnForce").addEventListener("click", ()=> {force(); });
         document.getElementById("btnResistance").addEventListener("click", ()=> {resistance();});

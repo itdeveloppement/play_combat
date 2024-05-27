@@ -5,10 +5,8 @@
 include "templates/fragments/head_fragment.php";
 ?>
 <body>
-    <header>
-        <button><a href="afficher_page_jeu_controleur.php">Retourner jouer</a></button>
-    </header>
     <main >
+    <button><a href="afficher_page_jeu_controleur.php">Retourner jouer</a></button>
         <h2>Le Grand combat, les régles du jeu</h2>
         <!-- salle -->
         <h3>But du jeu</h3>
