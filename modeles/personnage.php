@@ -649,12 +649,12 @@ public function verifTransformerResistance() {
 /**
  * Role verifier si le personnage et viviant ou mort
  * @param : neant
- * @return : true si vivant, sinon false
+ * @return : true si mort, sinon false
  */
 public function isDead() {
     if ($this->get("pts_vie")<=1) {
-        return false;
-    } else { return true;} 
+        return true;
+    } else { return false;} 
 }
 
 }

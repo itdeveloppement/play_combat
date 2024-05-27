@@ -1,16 +1,16 @@
 <?php 
 
-/*
+
 // role : test de la fonction
  // initialisation
  include "utils/init.php";
 
  $session = new session ();
- $session->connect(15);
+ $session->connect(17);
 
- $personnage = new personnage(15);
+$personnage = new personnage(17);
  
-
+/*
 $idAdversaire=17;
 
 // print($personnage->defendreRiposte ($idAdversaire));
@@ -26,7 +26,11 @@ $idAdversaire=17;
 print($personnage->subirAttaque($idAdversaire));
 
 // include "templates/pages/test_affichage.php";
+
+
 */
+
+// print_r($personnage->isDead())
 ?>
 
 

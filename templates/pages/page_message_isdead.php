@@ -7,8 +7,9 @@ include "templates/fragments/head_fragment.php";
 ?>
 <body>
     <main >
-        <h2>Vous etes mort !</h2>
+        <h2>Vous êtes mort !</h2>
         <p>Pour rejouer vous devez recréer un personnage</p>
+        <button><a href="deconnexion_controleur.php">Quitter ou rejouer</a></button>
         <button><a href="deconnexion_controleur.php">Quitter ou rejouer</a></button>
     </main>
 </body>

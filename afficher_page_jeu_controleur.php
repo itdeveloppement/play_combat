@@ -18,7 +18,7 @@ if  ($session->isConnected()) {
     $personnage = new personnage();
 
     // verification si personnage vivant
-    if (! $personnage->isDead()) {
+    if ($personnage->isDead()) {
         $session->deconnect();
         include "templates/pages/page_message_isdead.php";
         exit;
@@ -36,19 +36,26 @@ if  ($session->isConnected()) {
 
 } else if ((isset($_POST["log"]) && isset($_POST["password"]))) {
 
-    // recuperation et controle des données POST
-        $log = $_POST["log"];
-        $password = $_POST["password"];
-    
-    // validation de la connexion et rensegnement session id
-    $personnage = new personnage();
+    /*
     if (! $personnage->connexionValide ($log, $password)) {
     include "templates/pages/form_connexion_view.php";
     exit;
     } 
+    */
 
+    // recuperation et controle des données POST
+    $log = $_POST["log"];
+    $password = $_POST["password"];
+    
+    // validation de la connexion et rensegnement session id
+    $personnage = new personnage();
+    $personnage->connexionValide ($log, $password);
+
+    // instenciation du personnage en cours
+    $personnage = new personnage($session->getIdConnected());
+   
     // verification si personnage vivant
-    if (! $personnage->isDead()) {
+    if ($personnage->isDead()) {
         $session->deconnect();
         include "templates/pages/page_message_isdead.php";
         exit;
