@@ -304,6 +304,9 @@ function rafraichirPage(){
             document.getElementById('ptsAgilite2').textContent = response.personnage.pts_agilite;
             affichageHistorique(response.historique);
             affichageListePerssonagesSalle(response.listePersonnageSalle);
+            if (response.personnage.pts_vie <= 0) {
+                isdead();
+            }
     })
     // recuperation des erreurs
     .catch(erreur=>{
