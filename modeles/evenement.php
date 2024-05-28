@@ -1,5 +1,10 @@
 <?php
 
+// note de correction
+// il etait possible de faire
+    // un historique au debut de l'action
+    // un historique à la fin de l'action
+
 class evenement extends _model {
 
  // attributs

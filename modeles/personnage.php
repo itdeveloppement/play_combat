@@ -1,5 +1,13 @@
 <?php
 
+// observation de correction
+    // surcharger la methode personnage avec load(id) pour gerer au chargement les points d'agilité toute les 3 seconde
+    // faire une methode ataqquer et une methode subir une attaque
+    // utilisation de constante
+        // declarer les constante const ACTION = "valeur" / number, string
+        // UTILISATION nomdelaclasee::ACTION (non de la constante)
+        // le :: permet d'aller chercher des fct statique, des constante
+
 /**
  * classe : personnage 
  * role : gestion des objet personnage
@@ -22,6 +30,7 @@ class personnage extends _model {
  ];
 
  // lien objet
+ // il n'y a pas de link
  protected $links = ["evenement" => "evenement"];
 
 
@@ -73,7 +82,7 @@ public function identifiantValide ($identifiant) {
  */
 public function caracteristiquesPerso () {
     $data = [ 
-        "id" => $this->id(),
+    "id" => $this->id(),
     "nom" => $this->get("nom"),
     "pts_vie" => $this->get("pts_vie"),
     "pts_force" => $this->get("pts_force"),
